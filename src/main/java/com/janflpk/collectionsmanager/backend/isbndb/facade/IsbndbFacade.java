@@ -1,5 +1,6 @@
 package com.janflpk.collectionsmanager.backend.isbndb.facade;
 
+import com.janflpk.collectionsmanager.backend.mapper.BookMapper;
 import com.janflpk.collectionsmanager.backend.service.IsbndbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
