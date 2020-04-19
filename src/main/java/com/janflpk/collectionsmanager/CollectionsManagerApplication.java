@@ -1,13 +1,13 @@
-package com.janflpk.booksmanager;
+package com.janflpk.collectionsmanager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BooksManagerApplication {
+public class CollectionsManagerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BooksManagerApplication.class, args);
+        SpringApplication.run(CollectionsManagerApplication.class, args);
     }
 
 }

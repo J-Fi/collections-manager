@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.janflpk</groupId>
-    <artifactId>books-manager</artifactId>
+    <artifactId>collections-manager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>books-manager</name>
     <description>Personal books manager aplication</description>
@@ -49,6 +49,10 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
 
