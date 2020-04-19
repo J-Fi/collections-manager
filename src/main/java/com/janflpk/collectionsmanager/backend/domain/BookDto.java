@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.Lob;
-import javax.security.auth.Subject;
 import java.util.List;
 
 @Getter

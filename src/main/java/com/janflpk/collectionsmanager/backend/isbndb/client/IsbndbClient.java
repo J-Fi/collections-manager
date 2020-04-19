@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
+@Component
 public class IsbndbClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IsbndbClient.class);

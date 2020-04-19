@@ -1,10 +1,12 @@
 package com.janflpk.collectionsmanager.backend.mapper;
 
 import com.janflpk.collectionsmanager.backend.domain.Author;
+import com.janflpk.collectionsmanager.backend.domain.Book;
 import com.janflpk.collectionsmanager.backend.domain.BookDto;
+import com.janflpk.collectionsmanager.backend.domain.Subject;
 import org.springframework.stereotype.Component;
 
-import javax.security.auth.Subject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +23,7 @@ public class BookMapper {
     }
 
     public List<Author> mapStringToAuthorsList(String authors) {
-        List<Author> list = Stream.of(authors.split("; ")).map(author -> new Author(author)).collect(Collectors.toList());
+        List<Author> list = Stream.of(authors.split("; ")).map(Author::new).collect(Collectors.toList());
         System.out.println(list.size());
         return list;
     }
@@ -37,29 +39,14 @@ public class BookMapper {
 
     public List<Subject> mapStringToSubjectsList(String subjects) {
         if (subjects != null) {
-            List<Subject> list = Stream.of(subjects.split("; ")).map(subject -> new Subject(subject)).collect(Collectors.toList());
+            List<Subject> list = Stream.of(subjects.split("; ")).map(Subject::new).collect(Collectors.toList());
             System.out.println(list.size());
             return list;
         }
         return new ArrayList<>();
     }
 
-    public BookToFrontendDto mapToBookToFrontendDto(Book book) {
-        return new BookToFrontendDto(
-                book.getBookId(),
-                book.getIsbn(),
-                book.getIsbn13(),
-                book.getTitle(),
-                book.getPublisher(),
-                book.getSynopsys(),
-                book.getImage(),
-                book.getAuthors(),
-                book.getSubjects(),
-                book.getPublishDate(),
-                book.getBooksCollection().getBooksCollectionId());
-    }
-
-    public BookToFrontendFromIsbndbDto mapToBookToFrontendFromIsbndbDto(BookDto bookDto) {
+/*    public BookToFrontendFromIsbndbDto mapToBookToFrontendFromIsbndbDto(BookDto bookDto) {
         return new BookToFrontendFromIsbndbDto(
                 bookDto.getIsbn(),
                 bookDto.getIsbn13(),
@@ -70,21 +57,21 @@ public class BookMapper {
                 mapAuthorsListToString(bookDto.getAuthors()),
                 mapSubjectsListToString(bookDto.getSubjects()),
                 bookDto.getPublishDate());
+    }*/
+
+    public Book mapToBook(BookDto bookDto) {
+        return new Book(bookDto.getIsbn(),
+                bookDto.getIsbn13(),
+                bookDto.getTitle(),
+                bookDto.getPublisher(),
+                bookDto.getSynopsys(),
+                bookDto.getImage(),
+                mapAuthorsListToString(bookDto.getAuthors()),
+                mapSubjectsListToString(bookDto.getSubjects()),
+                bookDto.getPublishDate());
     }
 
-    public Book mapToBook(BookToFrontendDto bookToFrontendDto) {
-        return new Book(bookToFrontendDto.getIsbn(),
-                bookToFrontendDto.getIsbn13(),
-                bookToFrontendDto.getTitle(),
-                bookToFrontendDto.getPublisher(),
-                bookToFrontendDto.getSynopsys(),
-                bookToFrontendDto.getImage(),
-                bookToFrontendDto.getAuthors(),
-                bookToFrontendDto.getSubjects(),
-                bookToFrontendDto.getPublishDate());
-    }
-
-    public List<BookToFrontendDto> mapToBookToFrontendDtoList(List<Book> bookList) {
+    /*public List<BookToFrontendDto> mapToBookToFrontendDtoList(List<Book> bookList) {
         return bookList.stream().
                 map(book -> new BookToFrontendDto(book.getBookId(), book.getIsbn(),
                         Optional.ofNullable(book.getIsbn13()).orElse("Unavailable"), book.getTitle(),
@@ -93,9 +80,9 @@ public class BookMapper {
                         Optional.ofNullable(book.getSubjects()).orElse("Unavailable"), book.getPublishDate(),
                         book.getBooksCollection().getBooksCollectionId())).
                 collect(Collectors.toList());
-    }
+    }*/
 
-    public Book mapBookFromFrontendDtoToBook (BookFromFrontendDto bookFromFrontendDto) {
+/*    public Book mapBookFromFrontendDtoToBook (BookFromFrontendDto bookFromFrontendDto) {
         return new Book(bookFromFrontendDto.getIsbn(), bookFromFrontendDto.getIsbn13(),
                 bookFromFrontendDto.getTitle(), bookFromFrontendDto.getPublisher(),
                 bookFromFrontendDto.getSynopsys(), bookFromFrontendDto.getImage(),
@@ -109,5 +96,5 @@ public class BookMapper {
                 book.getSynopsys(), book.getImage(),
                 book.getAuthors(), book.getSubjects(),
                 book.getPublishDate());
-    }
+    }*/
 }

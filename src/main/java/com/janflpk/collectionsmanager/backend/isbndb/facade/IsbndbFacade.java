@@ -1,5 +1,6 @@
 package com.janflpk.collectionsmanager.backend.isbndb.facade;
 
+import com.janflpk.collectionsmanager.backend.domain.Book;
 import com.janflpk.collectionsmanager.backend.mapper.BookMapper;
 import com.janflpk.collectionsmanager.backend.service.IsbndbService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class IsbndbFacade {
     @Autowired
     private BookMapper bookMapper;
 
-    public BookToFrontendFromIsbndbDto getJsonBookDto(String isbn) {
-        return bookMapper.mapToBookToFrontendFromIsbndbDto(isbndbService.getJsonBookDto(isbn));
+    public Book getBook(String isbn) {
+        return bookMapper.mapToBook(isbndbService.getJsonBookDto(isbn));
     }
 }
