@@ -8,17 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Transactional
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
-    @Override
-    Optional<Book> findById(Long id);
 
     @Override
     List<Book> findAll();
 
     @Query
-    List<Book> getBooksListByBooksCollectionId(@Param("BOOKSCOLLECTIONID") Long id);
+    List<Book> findAll(@Param("searchText") String searchText);
 }

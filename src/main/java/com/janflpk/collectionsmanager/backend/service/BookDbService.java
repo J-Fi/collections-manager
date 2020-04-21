@@ -5,10 +5,7 @@ import com.janflpk.collectionsmanager.backend.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.List;
 
 @Service
 public class BookDbService {
@@ -19,12 +16,25 @@ public class BookDbService {
     @Autowired
     private BooksCollectionDbService booksCollectionDbService;
 
+/*    public BookDbService(BookRepository bookRepo, BooksCollectionDbService booksCollectionDbService) {
+        this.bookRepo = bookRepo;
+        this.booksCollectionDbService = booksCollectionDbService;
+    }*/
+
+    public List<Book> findAll() {
+        return bookRepo.findAll();
+    }
+
+    public List<Book> findAll(String searchText) {
+        return bookRepo.findAll(searchText);
+    }
+
     public Book saveBook (Book book, Long booksCollectionId) {
         book.setBooksCollection(booksCollectionDbService.findById(booksCollectionId));
         return bookRepo.save(book);
     }
 
-    public Book updateBook(Long booksCollectionId, Long bookId, Book book) {
+/*    public Book updateBook(Long booksCollectionId, Long bookId, Book book) {
         List<Book> booksToUpdate = bookRepo.findAll().stream()
                 .filter(b -> b.getBooksCollection().getBooksCollectionId().equals(booksCollectionId))
                 .filter(b -> b.getBookId().equals(bookId))
@@ -57,5 +67,6 @@ public class BookDbService {
                 .filter(book -> (book.getBooksCollection().getBooksCollectionId()).equals(booksCollectionId))
                 .collect(Collectors.toList());
         return listFiltered;
-    }
+    }*/
+
 }

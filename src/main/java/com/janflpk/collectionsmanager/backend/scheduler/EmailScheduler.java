@@ -2,7 +2,6 @@ package com.janflpk.collectionsmanager.backend.scheduler;
 
 import com.janflpk.collectionsmanager.backend.domain.Mail;
 import com.janflpk.collectionsmanager.backend.domain.MailGeneratorType;
-import com.janflpk.collectionsmanager.backend.repository.BookRepository;
 import com.janflpk.collectionsmanager.backend.service.SimpleEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
