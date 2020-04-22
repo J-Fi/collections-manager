@@ -1,3 +1,37 @@
+.book-list-view .logout {
+    font-size: 1em;
+    margin: var(--lumo-space-m);
+}
+
+.book-list-view .content {
+    display: flex;
+}
+
+.book-list-view .content-grid {
+    flex: 2;
+}
+
+.book-list-view .book-form {
+    flex: 1;
+    padding: var(--lumo-space-m);
+}
+
+.book-form .buttons-layout {
+    display: flex;
+}
+
+.book-form .add-book-button {
+    flex: 1;
+}
+
+.book-form .delete-book-button {
+    flex: 1;
+}
+
+.book-form .close-button {
+    flex: 1;
+}
+
 .header h1.logo {
     font-size: 1em;
     margin: var(--lumo-space-m);

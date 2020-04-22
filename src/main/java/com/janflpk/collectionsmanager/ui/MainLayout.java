@@ -25,8 +25,13 @@ public class MainLayout extends AppLayout {
         logo.addClassName("logo");
 
         Anchor logout = new Anchor("/logout", "Wyloguj");
+        logout.addClassName("logout");
+        logout.getElement().getStyle().set("margin", "5px");
+        logout.getElement().getStyle().set("padding", "5px");
 
-        HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo, logout);
+        DrawerToggle drawer = new DrawerToggle();
+
+        HorizontalLayout header = new HorizontalLayout(drawer, logo, logout);
         header.expand(logo);
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
         header.setWidth("100%");
