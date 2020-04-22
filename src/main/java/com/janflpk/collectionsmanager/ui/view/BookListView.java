@@ -3,6 +3,7 @@ package com.janflpk.collectionsmanager.ui.view;
 import com.janflpk.collectionsmanager.backend.domain.Book;
 import com.janflpk.collectionsmanager.backend.service.BookDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -37,12 +38,14 @@ public class BookListView extends VerticalLayout {
         //Div content = new Div(bookGrid, bookForm);
         content.setSizeFull();
 
-        add(filterText, content);
+        add(getToolBar(), content);
 
         configureGrid();
-        configureFilterText();
+        //configureFilterText();
 
         updateBookList();
+
+        closeBookAddForm();
     }
 
     private void configureGrid() {
@@ -66,7 +69,24 @@ public class BookListView extends VerticalLayout {
         filterText.addValueChangeListener(event -> updateBookList());
     }
 
+    private HorizontalLayout getToolBar() {
+        configureFilterText();
+        Button addBookButton = new Button("Dodaj nowy rekord");
+        addBookButton.addClickListener(click -> addNewBook());
+        HorizontalLayout toolBar = new HorizontalLayout(filterText, addBookButton);
+        return toolBar;
+    }
+
+    private void addNewBook() {
+        bookGrid.asSingleSelect().clear();
+
+    }
+
     private void updateBookList() {
         bookGrid.setItems(bookDbService.findAll(filterText.getValue()));
+    }
+
+    private void closeBookAddForm() {
+
     }
 }

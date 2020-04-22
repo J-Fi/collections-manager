@@ -10,6 +10,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 
 public class BookForm extends FormLayout {
@@ -28,10 +29,12 @@ public class BookForm extends FormLayout {
     private Button deleteBook = new Button("Usuń");
     private Button close = new Button("Anuluj");
 
-    private Binder<Book> binder;
+    private Binder<Book> binder = new BeanValidationBinder<>(Book.class);
 
     public BookForm() {
         addClassName("book-form");
+
+        //binder.bindInstanceFields(this);
 
         Div bookFormDiv = new Div(createBookForm(), createButtonsLayout());
         bookFormDiv.addClassName("book-form-div");
@@ -39,6 +42,8 @@ public class BookForm extends FormLayout {
         add(bookFormDiv);
 
     }
+
+
 
     private Component createButtonsLayout() {
         addBook.setClassName("add-book-button");
