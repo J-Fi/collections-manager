@@ -33,6 +33,9 @@ public class BookListView extends VerticalLayout {
         bookGrid.addClassName("content-grid");
 
         bookForm = new BookForm();
+        bookForm.addListener(BookForm.SaveBookEvent.class, this::saveBook);
+        bookForm.addListener(BookForm.DeleteBookEvent.class, this::deleteBook);
+        bookForm.addListener(BookForm.CloseEvent.class, e -> closeBookForm());
 
         HorizontalLayout content = new HorizontalLayout(bookGrid, bookForm);
         //Div content = new Div(bookGrid, bookForm);
@@ -45,7 +48,7 @@ public class BookListView extends VerticalLayout {
 
         updateBookList();
 
-        closeBookAddForm();
+        closeBookForm();
     }
 
     private void configureGrid() {
@@ -60,6 +63,8 @@ public class BookListView extends VerticalLayout {
                 .setFlexGrow(30)
                 .setResizable(true);
         bookGrid.getColumnByKey("publishDate").setWidth("150px");
+
+        bookGrid.asSingleSelect().addValueChangeListener(e -> editBook(e.getValue()));
     }
 
     private void configureFilterText() {
@@ -79,14 +84,39 @@ public class BookListView extends VerticalLayout {
 
     private void addNewBook() {
         bookGrid.asSingleSelect().clear();
+        editBook(new Book());
+    }
 
+    private void editBook(Book book) {
+        if(book == null) {
+            closeBookForm();
+        } else {
+            System.out.println("editBook() " + (book == null));
+            bookForm.setBook(book);
+            bookForm.setVisible(true);
+            bookForm.addClassName("editing");
+        }
     }
 
     private void updateBookList() {
         bookGrid.setItems(bookDbService.findAll(filterText.getValue()));
     }
 
-    private void closeBookAddForm() {
+    private void saveBook(BookForm.SaveBookEvent event) {
+        bookDbService.saveBook(event.getBook(), 3L);
+        updateBookList();
+        closeBookForm();
+    }
 
+    private void deleteBook(BookForm.DeleteBookEvent event) {
+        bookDbService.deleteBook(event.getBook().getBookId());
+        updateBookList();
+        closeBookForm();
+    }
+
+    private void closeBookForm() {
+        bookForm.setBook(null);
+        bookForm.setVisible(false);
+        bookForm.addClassName("editing");
     }
 }

@@ -2,6 +2,8 @@ package com.janflpk.collectionsmanager.ui.view;
 
 import com.janflpk.collectionsmanager.backend.domain.Book;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEvent;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -12,6 +14,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.converter.StringToIntegerConverter;
+import com.vaadin.flow.shared.Registration;
 
 public class BookForm extends FormLayout {
 
@@ -34,7 +38,18 @@ public class BookForm extends FormLayout {
     public BookForm() {
         addClassName("book-form");
 
-        //binder.bindInstanceFields(this);
+        binder.bind(isbn, "isbn");
+        binder.bind(isbn13, "isbn13");
+        binder.bind(title, "title");
+        binder.bind(publisher, "publisher");
+        binder.bind(synopsys, "synopsys");
+        binder.bind(image, "image");
+        binder.bind(authors, "authors");
+        binder.bind(subjects, "subjects");
+        binder.forField(publishDate)
+                .withNullRepresentation("")
+                .withConverter(new StringToIntegerConverter("Wprowadź liczbę!"))
+                .bind("publishDate");
 
         Div bookFormDiv = new Div(createBookForm(), createButtonsLayout());
         bookFormDiv.addClassName("book-form-div");
@@ -43,7 +58,9 @@ public class BookForm extends FormLayout {
 
     }
 
-
+    public void setBook (Book book) {
+        binder.setBean(book);
+    }
 
     private Component createButtonsLayout() {
         addBook.setClassName("add-book-button");
@@ -59,15 +76,21 @@ public class BookForm extends FormLayout {
         addBook.addClickShortcut(Key.ENTER);
         close.addClickShortcut(Key.ESCAPE);
 
-        /*addBook.addClickListener();
-        deleteBook.addClickListener();
-        close.addClickListener();*/
+        addBook.addClickListener(click -> validateAndSave());
+        deleteBook.addClickListener(click -> fireEvent(new DeleteBookEvent(this, binder.getBean())));
+        close.addClickListener(click -> fireEvent(new CloseEvent(this)));
 
         HorizontalLayout buttonsLayout = new HorizontalLayout(addBook, deleteBook, close);
         buttonsLayout.getElement().getStyle().set("padding", "0px 16px 0px 16px");
         buttonsLayout.addClassName("buttons-layout");
 
         return buttonsLayout;
+    }
+
+    private void validateAndSave() {
+        if (binder.isValid()) {
+            fireEvent(new SaveBookEvent(this, binder.getBean()));
+        }
     }
 
     private Component createBookForm() {
@@ -104,4 +127,38 @@ public class BookForm extends FormLayout {
         return new VerticalLayout(isbn, isbn13, title, publisher, synopsys, image, authors, subjects, publishDate);
     }
 
+    public static abstract class BookFormEvent extends ComponentEvent<BookForm> {
+        private Book book;
+
+        public BookFormEvent(BookForm source, Book book) {
+            super(source, false);
+            this.book = book;
+        }
+
+        public Book getBook() {
+            return book;
+        }
+    }
+
+    public static class SaveBookEvent extends BookFormEvent {
+        public SaveBookEvent(BookForm source, Book book) {
+            super(source, book);
+        }
+    }
+
+    public static class DeleteBookEvent extends BookFormEvent {
+        public DeleteBookEvent(BookForm source, Book book) {
+            super(source, book);
+        }
+    }
+
+    public static class CloseEvent extends BookFormEvent {
+        public CloseEvent(BookForm source) {
+            super(source, null);
+        }
+    }
+
+    public <T extends ComponentEvent<?>> Registration addListener (Class<T> eventType, ComponentEventListener<T> listener) {
+        return getEventBus().addListener(eventType, listener);
+    }
 }

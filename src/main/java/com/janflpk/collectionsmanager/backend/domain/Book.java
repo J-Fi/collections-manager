@@ -88,7 +88,7 @@ public class Book {
         this.booksCollection = booksCollection;
     }
 
-    public Book(String isbn, String isbn13, String title, String publisher, String synopsys, String image,
+/*    public Book(String isbn, String isbn13, String title, String publisher, String synopsys, String image,
                 String authors, String subjects, Integer publishDate, Long booksCollectionId) {
         this.isbn = isbn;
         this.isbn13 = isbn13;
@@ -99,7 +99,7 @@ public class Book {
         this.authors = authors;
         this.subjects = subjects;
         this.publishDate = publishDate;
-    }
+    }*/
 
 
 

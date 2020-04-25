@@ -34,7 +34,7 @@ public class BookDbService {
         return bookRepo.save(book);
     }
 
-/*    public Book updateBook(Long booksCollectionId, Long bookId, Book book) {
+    /*public Book updateBook(Long booksCollectionId, Long bookId, Book book) {
         List<Book> booksToUpdate = bookRepo.findAll().stream()
                 .filter(b -> b.getBooksCollection().getBooksCollectionId().equals(booksCollectionId))
                 .filter(b -> b.getBookId().equals(bookId))
@@ -51,13 +51,13 @@ public class BookDbService {
         bookToUpdate.setSubjects(book.getSubjects());
         bookToUpdate.setPublishDate(book.getPublishDate());
         return bookRepo.save(bookToUpdate);
-    }
+    }*/
 
     public void deleteBook(final Long id) {
         bookRepo.deleteById(id);
     }
 
-    public Book findById(final Long id) {
+    /*public Book findById(final Long id) {
         return bookRepo.findById(id).orElse(new Book());
     }
 
