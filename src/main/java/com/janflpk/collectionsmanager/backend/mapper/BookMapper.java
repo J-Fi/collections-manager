@@ -6,10 +6,8 @@ import com.janflpk.collectionsmanager.backend.domain.BookDto;
 import com.janflpk.collectionsmanager.backend.domain.Subject;
 import org.springframework.stereotype.Component;
 
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,9 +15,12 @@ import java.util.stream.Stream;
 public class BookMapper {
 
     public String mapAuthorsListToString(List<Author> authors) {
-        String s = authors.stream().map(Object::toString).collect(Collectors.joining("; "));
-        System.out.println("String: " + s);
-        return s;
+        if(authors != null) {
+            String s = authors.stream().map(Object::toString).collect(Collectors.joining("; "));
+            System.out.println("String: " + s);
+            return s;
+        }
+        return "";
     }
 
     public List<Author> mapStringToAuthorsList(String authors) {
@@ -34,7 +35,7 @@ public class BookMapper {
             System.out.println("String: " + s);
             return s;
         }
-        return "Unavailable";
+        return "";
     }
 
     public List<Subject> mapStringToSubjectsList(String subjects) {
@@ -60,15 +61,19 @@ public class BookMapper {
     }*/
 
     public Book mapToBook(BookDto bookDto) {
-        return new Book(bookDto.getIsbn(),
-                bookDto.getIsbn13(),
-                bookDto.getTitle(),
-                bookDto.getPublisher(),
-                bookDto.getSynopsys(),
-                bookDto.getImage(),
-                mapAuthorsListToString(bookDto.getAuthors()),
-                mapSubjectsListToString(bookDto.getSubjects()),
-                bookDto.getPublishDate());
+        if(bookDto == null) {
+            return new Book();
+        } else {
+            return new Book(bookDto.getIsbn(),
+                    bookDto.getIsbn13(),
+                    bookDto.getTitle(),
+                    bookDto.getPublisher(),
+                    bookDto.getSynopsys(),
+                    bookDto.getImage(),
+                    mapAuthorsListToString(bookDto.getAuthors()),
+                    mapSubjectsListToString(bookDto.getSubjects()),
+                    bookDto.getPublishDate());
+        }
     }
 
     /*public List<BookToFrontendDto> mapToBookToFrontendDtoList(List<Book> bookList) {
