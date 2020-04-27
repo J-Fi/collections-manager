@@ -17,8 +17,12 @@ public class IsbndbService {
     private IsbndbClient isbndbClient;
 
     public BookDto getJsonBookDto(String isbn) {
-        BookDto bookDto = isbndbClient.getJsonBookDto(isbn).getBody().getBookDto();
-        LOGGER.info("See the content of a bookDto object: " + bookDto.toString());
-        return Optional.ofNullable(bookDto).orElse(new BookDto());
+        try {
+            BookDto bookDto = isbndbClient.getJsonBookDto(isbn).getBody().getBookDto();
+            return Optional.ofNullable(bookDto).orElse(new BookDto());
+        } catch (Exception e) {
+            LOGGER.info(e.getMessage());
+            return new BookDto();
+        }
     }
 }

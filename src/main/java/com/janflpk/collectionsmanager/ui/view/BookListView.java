@@ -1,29 +1,43 @@
 package com.janflpk.collectionsmanager.ui.view;
 
 import com.janflpk.collectionsmanager.backend.domain.Book;
+import com.janflpk.collectionsmanager.backend.isbndb.facade.IsbndbFacade;
 import com.janflpk.collectionsmanager.backend.service.BookDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
+import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-
+@Getter
 @Route(value = "", layout = MainLayout.class)
 public class BookListView extends VerticalLayout {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(BookListView.class);
+
     private BookForm bookForm;
+
+    TextField isbnInput = new TextField("");
 
     private TextField filterText = new TextField();
     private Grid<Book> bookGrid = new Grid<>(Book.class);
     private BookDbService bookDbService;
 
+    private Dialog isbnInputPopupWindow = new Dialog();
+    private IsbndbFacade isbndbFacade;
 
-    public BookListView(BookDbService bookDbService) {
+    public BookListView(BookDbService bookDbService, IsbndbFacade isbndbFacade) {
         this.bookDbService = bookDbService;
+        this.isbndbFacade = isbndbFacade;
 
         addClassName("book-list-view");
 
@@ -44,6 +58,8 @@ public class BookListView extends VerticalLayout {
         add(getToolBar(), content);
 
         configureGrid();
+
+        configureIsbnInputPopupWindow();
         //configureFilterText();
 
         updateBookList();
@@ -74,10 +90,30 @@ public class BookListView extends VerticalLayout {
         filterText.addValueChangeListener(event -> updateBookList());
     }
 
+    private void configureIsbnInputPopupWindow() {
+        Button search = new Button("Szukaj");
+        search.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        search.addClickShortcut(Key.ENTER);
+        search.addClickListener(e -> searchBookByIsbn());
+
+        Button cancel = new Button("Anuluj");
+        cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        cancel.addClickShortcut(Key.ESCAPE);
+        cancel.addClickListener(e -> cancelIsbnSearch());
+
+        isbnInput.setAutofocus(true);
+        isbnInput.setPlaceholder("Wpisz nr isbn...");
+        isbnInput.setClearButtonVisible(true);
+
+        HorizontalLayout buttons = new HorizontalLayout(search, cancel);
+        VerticalLayout layout = new VerticalLayout(isbnInput, buttons);
+        isbnInputPopupWindow.add(layout);
+    }
+
     private HorizontalLayout getToolBar() {
         configureFilterText();
         Button addBookButton = new Button("Dodaj nowy rekord");
-        addBookButton.addClickListener(click -> addNewBook());
+        addBookButton.addClickListener(click -> isbnInputPopupWindow.open());
         HorizontalLayout toolBar = new HorizontalLayout(filterText, addBookButton);
         return toolBar;
     }
@@ -118,5 +154,20 @@ public class BookListView extends VerticalLayout {
         bookForm.setBook(null);
         bookForm.setVisible(false);
         bookForm.addClassName("editing");
+    }
+
+    public void searchBookByIsbn() {
+        Book book = isbndbFacade.getBook(getIsbnInput().getValue());
+        isbnInput.clear();
+        isbnInputPopupWindow.close();
+        if(book == null) {
+            addNewBook();
+        } else {
+            editBook(book);
+        }
+    }
+
+    public void cancelIsbnSearch() {
+        isbnInputPopupWindow.close();
     }
 }
