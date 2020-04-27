@@ -25,6 +25,7 @@ public class BookListView extends VerticalLayout {
     public static final Logger LOGGER = LoggerFactory.getLogger(BookListView.class);
 
     private BookForm bookForm;
+    private BookView bookView;
 
     TextField isbnInput = new TextField("");
 
@@ -51,11 +52,13 @@ public class BookListView extends VerticalLayout {
         bookForm.addListener(BookForm.DeleteBookEvent.class, this::deleteBook);
         bookForm.addListener(BookForm.CloseEvent.class, e -> closeBookForm());
 
+        bookView = new BookView();
+
         HorizontalLayout content = new HorizontalLayout(bookGrid, bookForm);
         //Div content = new Div(bookGrid, bookForm);
         content.setSizeFull();
 
-        add(getToolBar(), content);
+        add(getToolBar(), bookView, content);
 
         configureGrid();
 
@@ -65,6 +68,7 @@ public class BookListView extends VerticalLayout {
         updateBookList();
 
         closeBookForm();
+        closeBookView();
     }
 
     private void configureGrid() {
@@ -80,7 +84,7 @@ public class BookListView extends VerticalLayout {
                 .setResizable(true);
         bookGrid.getColumnByKey("publishDate").setWidth("150px");
 
-        bookGrid.asSingleSelect().addValueChangeListener(e -> editBook(e.getValue()));
+        bookGrid.asSingleSelect().addValueChangeListener(e -> showBookView(e.getValue())); //editBook(e.getValue())
     }
 
     private void configureFilterText() {
@@ -156,6 +160,10 @@ public class BookListView extends VerticalLayout {
         bookForm.addClassName("editing");
     }
 
+    private void closeBookView() {
+        bookView.setVisible(false);
+    }
+
     public void searchBookByIsbn() {
         Book book = isbndbFacade.getBook(getIsbnInput().getValue());
         isbnInput.clear();
@@ -165,6 +173,13 @@ public class BookListView extends VerticalLayout {
         } else {
             editBook(book);
         }
+    }
+
+    private void showBookView(Book book) {
+        content.setVisible(false);
+        bookView.setVisible(true);
+        bookView.setBook(book);
+        bookView.setSizeFull();
     }
 
     public void cancelIsbnSearch() {

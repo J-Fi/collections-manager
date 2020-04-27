@@ -29,7 +29,7 @@ public class BookForm extends FormLayout {
     private final TextField subjects = new TextField("Kategorie");
     private final TextField publishDate = new TextField("Rok wydania");
 
-    private Button addBook = new Button("Dodaj");
+    private Button addBook = new Button("Zapisz");
     private Button deleteBook = new Button("Usuń");
     private Button close = new Button("Anuluj");
 

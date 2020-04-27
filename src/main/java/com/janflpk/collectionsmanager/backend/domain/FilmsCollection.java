@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "FILMS_COLLECTIONS")
-public class FilmsCollection {
+public class  FilmsCollection {
 
     @Id
     @NotNull
