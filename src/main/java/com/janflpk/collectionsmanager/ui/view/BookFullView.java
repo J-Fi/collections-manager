@@ -8,7 +8,7 @@ import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -17,77 +17,84 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.shared.Registration;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public class BookForm extends FormLayout {
+@Getter
+@Setter
+@NoArgsConstructor
+public class BookFullView extends FormLayout {
 
-    private final TextField isbn = new TextField("ISBN");
-    private final TextField isbn13 = new TextField("ISBN13");
+    private Book book;
+
+    private final TextField isbn = new TextField("Numer ISBN");
+    private final TextField isbn13 = new TextField("Numer ISBN13");
     private final TextField title = new TextField("Tytuł");
-    private final TextField publisher = new TextField("Wydawnictwo");
-    private final TextArea synopsys = new TextArea("Streszczenie");
-    private final TextField image = new TextField("Link");
-    private final TextField authors = new TextField("Autorzy");
-    private final TextArea subjects = new TextArea("Kategorie");
-    private final TextField publishDate = new TextField("Rok wydania");
+    private final TextField publisher = new TextField("Wydawca");
+    private final TextArea synopsys = new TextArea("Omówienie");
+    private final TextField image = new TextField("Link do zdjęcia okładki");
+    private final TextField authors = new TextField("Autor");
+    private final TextArea subjects = new TextArea("Treść");
+    private final TextField publishDate = new TextField("Data publikacji");
 
-    private Button addBook = new Button("Zapisz");
-    private Button deleteBook = new Button("Usuń");
-    private Button close = new Button("Anuluj");
+    private Button saveBook = new Button("Zapisz");
+    private Button deleteBook = new Button("Zapisz");
+    private Button closeView = new Button("Zamknij");
 
     private Binder<Book> binder = new BeanValidationBinder<>(Book.class);
 
-    public BookForm() {
-        addClassName("book-form");
+    public BookFullView(Book book) {
+        this.book = book;
+
+        addClassName("book-full-view");
 
         binder.bind(isbn, "isbn");
         binder.bind(isbn13, "isbn13");
         binder.bind(title, "title");
         binder.bind(publisher, "publisher");
-        binder.bind(synopsys, "synopsys");
+        binder.bind(synopsys, "synopsis");
         binder.bind(image, "image");
         binder.bind(authors, "authors");
         binder.bind(subjects, "subjects");
         binder.forField(publishDate)
                 .withNullRepresentation("")
-                .withConverter(new StringToIntegerConverter("Wprowadź liczbę!"))
+                .withConverter(new StringToIntegerConverter("Wprowadź liczbę."))
                 .bind("publishDate");
 
-        Div bookFormDiv = new Div(createBookForm(), createButtonsLayout());
-        bookFormDiv.addClassName("book-form-div");
-
-        add(bookFormDiv);
+        add(getBookCoverImage(), createBookForm(), createButtonsLayout());
     }
 
-    public void setBook (Book book) {
+    public void setBook(Book book) {
         binder.setBean(book);
     }
 
     private Component createButtonsLayout() {
-        addBook.setClassName("add-book-button");
-        addBook.setEnabled(true);
-        addBook.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        saveBook.setClassName("save-book-button");
+        saveBook.setEnabled(true);
+        saveBook.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         deleteBook.setClassName("delete-book-button");
         deleteBook.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
-        close.setClassName("close-button");
-        close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        closeView.setClassName("close-button");
+        closeView.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-        addBook.addClickShortcut(Key.ENTER);
-        close.addClickShortcut(Key.ESCAPE);
+        saveBook.addClickShortcut(Key.ENTER);
+        closeView.addClickShortcut(Key.ESCAPE);
 
-        addBook.addClickListener(click -> validateAndSave());
+        saveBook.addClickListener(click -> validateAndSave());
         deleteBook.addClickListener(click -> fireEvent(new DeleteBookEvent(this, binder.getBean())));
-        close.addClickListener(click -> fireEvent(new CloseEvent(this)));
+        closeView.addClickListener(click -> fireEvent(new CloseBookViewEvent(this)));
 
-        HorizontalLayout buttonsLayout = new HorizontalLayout(addBook, deleteBook, close);
+        HorizontalLayout buttonsLayout = new HorizontalLayout(saveBook, deleteBook, closeView);
         buttonsLayout.getElement().getStyle().set("padding", "0px 16px 0px 16px");
         buttonsLayout.addClassName("buttons-layout");
 
         return buttonsLayout;
     }
 
-    private void validateAndSave() {
+    public void validateAndSave() {
         if (binder.isValid()) {
             fireEvent(new SaveBookEvent(this, binder.getBean()));
         }
@@ -105,12 +112,14 @@ public class BookForm extends FormLayout {
         publisher.getElement().getStyle().set("padding", "1px 0px 0px 0px");
         synopsys.getElement().getStyle().set("margin", "1px 0px 0px 0px");
         synopsys.getElement().getStyle().set("padding", "1px 0px 0px 0px");
+        synopsys.setMinHeight("100px");
         image.getElement().getStyle().set("margin", "1px 0px 0px 0px");
         image.getElement().getStyle().set("padding", "1px 0px 0px 0px");
         authors.getElement().getStyle().set("margin", "1px 0px 0px 0px");
         authors.getElement().getStyle().set("padding", "1px 0px 0px 0px");
         subjects.getElement().getStyle().set("margin", "1px 0px 0px 0px");
         subjects.getElement().getStyle().set("padding", "1px 0px 0px 0px");
+        subjects.setMinHeight("100px");
         publishDate.getElement().getStyle().set("margin", "1px 0px 0px 0px");
         publishDate.getElement().getStyle().set("padding", "1px 0px 0px 0px");
 
@@ -127,10 +136,21 @@ public class BookForm extends FormLayout {
         return new VerticalLayout(isbn, isbn13, title, publisher, synopsys, image, authors, subjects, publishDate);
     }
 
-    public static abstract class BookFormEvent extends ComponentEvent<BookForm> {
+    public Image getBookCoverImage() {
+        Image bookCover = new Image();
+        bookCover.setSrc(book.getImage());
+        bookCover.setAlt("Book's cover");
+        bookCover.setMaxWidth("300px");
+        bookCover.setMaxHeight("300px");
+        bookCover.setMinWidth("200px");
+        bookCover.setMinHeight("200px");
+        return bookCover;
+    }
+
+    public static abstract class BookFullViewEvent extends ComponentEvent<BookFullView> {
         private Book book;
 
-        public BookFormEvent(BookForm source, Book book) {
+        public BookFullViewEvent(BookFullView source, Book book) {
             super(source, false);
             this.book = book;
         }
@@ -140,25 +160,34 @@ public class BookForm extends FormLayout {
         }
     }
 
-    public static class SaveBookEvent extends BookFormEvent {
-        public SaveBookEvent(BookForm source, Book book) {
+    public static class SaveBookEvent extends BookFullViewEvent {
+        public SaveBookEvent(BookFullView source, Book book) {
             super(source, book);
         }
     }
 
-    public static class DeleteBookEvent extends BookFormEvent {
-        public DeleteBookEvent(BookForm source, Book book) {
+    public static class DeleteBookEvent extends BookFullViewEvent {
+        public DeleteBookEvent(BookFullView source, Book book) {
             super(source, book);
         }
     }
 
-    public static class CloseEvent extends BookFormEvent {
-        public CloseEvent(BookForm source) {
+    public static class CloseBookViewEvent extends BookFullViewEvent {
+        public CloseBookViewEvent(BookFullView source) {
             super(source, null);
         }
     }
 
-    public <T extends ComponentEvent<?>> Registration addListener (Class<T> eventType, ComponentEventListener<T> listener) {
+    public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType, ComponentEventListener<T> listener) {
         return getEventBus().addListener(eventType, listener);
     }
+
+/*    public BookToBackendDto getBookToBackendDto() {
+        System.out.println("SingleBookDialogView get() bookId: " + bookId);
+        return new BookToBackendDto(bookId, isbn.getTextContent(), isbn13.getTextContent(),
+                title.getTextContent(), publisher.getTextContent(),
+                synopsys.getTextContent(), image.getTextContent(),
+                authors.getTextContent(), subjects.getTextContent(),
+                publishDate.getTextContent(), booksCollectionId);
+    }*/
 }

@@ -25,7 +25,9 @@ public class BookListView extends VerticalLayout {
     public static final Logger LOGGER = LoggerFactory.getLogger(BookListView.class);
 
     private BookForm bookForm;
-    private BookView bookView;
+    private BookFullView bookView;
+
+    private Dialog bookViewPopupWindow = new Dialog();
 
     TextField isbnInput = new TextField("");
 
@@ -52,7 +54,7 @@ public class BookListView extends VerticalLayout {
         bookForm.addListener(BookForm.DeleteBookEvent.class, this::deleteBook);
         bookForm.addListener(BookForm.CloseEvent.class, e -> closeBookForm());
 
-        bookView = new BookView();
+
 
         HorizontalLayout content = new HorizontalLayout(bookGrid, bookForm);
         //Div content = new Div(bookGrid, bookForm);
@@ -84,7 +86,7 @@ public class BookListView extends VerticalLayout {
                 .setResizable(true);
         bookGrid.getColumnByKey("publishDate").setWidth("150px");
 
-        bookGrid.asSingleSelect().addValueChangeListener(e -> showBookView(e.getValue())); //editBook(e.getValue())
+        bookGrid.asSingleSelect().addValueChangeListener(e -> editBook(e.getValue())); //editBook(e.getValue())
     }
 
     private void configureFilterText() {
@@ -113,6 +115,12 @@ public class BookListView extends VerticalLayout {
         VerticalLayout layout = new VerticalLayout(isbnInput, buttons);
         isbnInputPopupWindow.add(layout);
     }
+
+/*    private void getBookViewPopupWindow(Book book) {
+        bookView = new BookFullView(book);
+        bookView.addListener(BookFullView.SaveBookEvent.class, e -> vali);
+        bookViewPopupWindow.add(bookView);
+    }*/
 
     private HorizontalLayout getToolBar() {
         configureFilterText();
@@ -176,7 +184,7 @@ public class BookListView extends VerticalLayout {
     }
 
     private void showBookView(Book book) {
-        content.setVisible(false);
+        bookGrid.setVisible(false);
         bookView.setVisible(true);
         bookView.setBook(book);
         bookView.setSizeFull();
