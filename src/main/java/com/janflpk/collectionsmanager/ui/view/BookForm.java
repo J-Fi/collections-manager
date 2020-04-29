@@ -17,8 +17,16 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.shared.Registration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class BookForm extends FormLayout {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookForm.class);
 
     private final TextField isbn = new TextField("ISBN");
     private final TextField isbn13 = new TextField("ISBN13");
@@ -39,8 +47,16 @@ public class BookForm extends FormLayout {
     public BookForm() {
         addClassName("book-form");
 
-        binder.bind(isbn, "isbn");
-        binder.bind(isbn13, "isbn13");
+        //binder.bind(isbn, "isbn");
+        binder.forField(isbn)
+                .withNullRepresentation("")
+                .withValidator(e -> (e == null || Pattern.matches("\\d{10}+", e)),"Wprowadź numer 10-cyfrowy")
+                .bind("isbn");
+        LOGGER.info("isbn.getValue().length() = " + isbn.getValue().length() + " " + isbn.getValue().getClass());
+        binder.forField(isbn13)
+                .withNullRepresentation("")
+                .withValidator(e -> (e == null || Pattern.matches("\\d{13}+", e)), "Wprowadź numer 13-cyfrowy")
+                .bind("isbn13");
         binder.bind(title, "title");
         binder.bind(publisher, "publisher");
         binder.bind(synopsys, "synopsys");
@@ -49,7 +65,8 @@ public class BookForm extends FormLayout {
         binder.bind(subjects, "subjects");
         binder.forField(publishDate)
                 .withNullRepresentation("")
-                .withConverter(new StringToIntegerConverter("Wprowadź liczbę!"))
+                .withValidator(e -> Pattern.matches("\\d{4}+", e), "Wprowadź rok 4-cyfrowy")
+                .withConverter(new StringToIntegerConverterNoWhiteCharacters("Wprowadź liczbę!"))
                 .bind("publishDate");
 
         Div bookFormDiv = new Div(createBookForm(), createButtonsLayout());
@@ -127,10 +144,11 @@ public class BookForm extends FormLayout {
         subjects.setWidthFull();
         publishDate.setWidthFull();
 
+
         synopsys.getStyle().set("maxHeight", "100px");
         subjects.getStyle().set("maxHeight", "100px");
 
-        return new VerticalLayout(isbn, isbn13, title, publisher, synopsys, image, authors, subjects, publishDate);
+        return new VerticalLayout(title, authors, isbn, isbn13, publisher, synopsys, image, subjects, publishDate);
     }
 
     public static abstract class BookFormEvent extends ComponentEvent<BookForm> {
@@ -166,5 +184,18 @@ public class BookForm extends FormLayout {
 
     public <T extends ComponentEvent<?>> Registration addListener (Class<T> eventType, ComponentEventListener<T> listener) {
         return getEventBus().addListener(eventType, listener);
+    }
+
+    public static class StringToIntegerConverterNoWhiteCharacters extends StringToIntegerConverter {
+        public StringToIntegerConverterNoWhiteCharacters(String errorMessage) {
+            super(errorMessage);
+        }
+
+        @Override
+        protected NumberFormat getFormat(Locale locale) {
+            DecimalFormat format = new DecimalFormat();
+            format.setGroupingUsed(false);
+            return format;
+        }
     }
 }

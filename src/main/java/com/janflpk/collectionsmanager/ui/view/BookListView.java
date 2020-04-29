@@ -10,6 +10,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -18,6 +19,8 @@ import com.vaadin.flow.router.Route;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.regex.Pattern;
 
 @Getter
 @Route(value = "", layout = MainLayout.class)
@@ -30,8 +33,13 @@ public class BookListView extends VerticalLayout {
     private Dialog bookViewPopupWindow= new Dialog();
     private Dialog isbnInputPopupWindow = new Dialog();
 
-    private TextField isbnInput = new TextField("");
+    private TextField isbnInput = new TextField();
     private TextField filterText = new TextField();
+
+    private Label label;
+
+    private Button search;
+    private Button cancel;
 
     private Grid<Book> bookGrid = new Grid<>(Book.class);
 
@@ -45,7 +53,6 @@ public class BookListView extends VerticalLayout {
         addClassName("book-list-view");
         setSizeFull();
 
-        //bookGrid.setSizeFull();
         bookGrid.addClassName("content-grid");
         HorizontalLayout content = new HorizontalLayout(bookGrid);
         content.setSizeFull();
@@ -82,12 +89,12 @@ public class BookListView extends VerticalLayout {
     }
 
     private void configureIsbnInputPopupWindow() {
-        Button search = new Button("Szukaj");
+        search = new Button("Szukaj");
         search.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         search.addClickShortcut(Key.ENTER);
         search.addClickListener(e -> searchBookByIsbn());
 
-        Button cancel = new Button("Anuluj");
+        cancel = new Button("Anuluj");
         cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         cancel.addClickShortcut(Key.ESCAPE);
         cancel.addClickListener(e -> cancelIsbnSearch());
@@ -95,10 +102,29 @@ public class BookListView extends VerticalLayout {
         isbnInput.setAutofocus(true);
         isbnInput.setPlaceholder("Wpisz nr isbn...");
         isbnInput.setClearButtonVisible(true);
+        isbnInput.addValueChangeListener(e -> validateIsbnInputValue(e.getValue()));
+        isbnInput.setValueChangeMode(ValueChangeMode.EAGER);
 
+        label = new Label("");
+        label.getElement().getStyle().set("color", "red");
+        label.getElement().getStyle().set("font-size", "15px");
+        label.setVisible(false);
         HorizontalLayout buttons = new HorizontalLayout(search, cancel);
-        VerticalLayout layout = new VerticalLayout(isbnInput, buttons);
+        VerticalLayout layout = new VerticalLayout(label, isbnInput, buttons);
         isbnInputPopupWindow.add(layout);
+    }
+
+    private void validateIsbnInputValue(String value) {
+        boolean validateResultIsbn = Pattern.matches("\\d{10}+", value);
+        boolean validateResultIsbn13 = Pattern.matches("\\d{13}", value);
+        if (validateResultIsbn || validateResultIsbn13) {
+            label.setVisible(false);
+            search.setEnabled(true);
+        } else {
+            label.setVisible(true);
+            label.setText("Numer powienien być 10 lub 13-cyfrowy.");
+            search.setEnabled(false);
+        }
     }
 
     private void configureBookViewPopupWindow() {
@@ -121,8 +147,6 @@ public class BookListView extends VerticalLayout {
         configureBookViewPopupWindow();
         HorizontalLayout dialog = new HorizontalLayout(getBookCoverImage(book), getBookForm(book));
         dialog.setSizeFull();
-        //getBookCoverImage(book).setSizeFull();
-        //getBookForm(book).setSizeFull();
         bookViewPopupWindow.add(dialog);
         bookViewPopupWindow.addDialogCloseActionListener(e -> closeBookForm());
         bookViewPopupWindow.open();

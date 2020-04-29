@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,11 +29,11 @@ public class Book {
     @Column(name = "book_id", unique = true)
     private Long bookId;
 
-    @NotNull
+    //@Nullable
     @Column(name = "isbn")
     private String isbn;
 
-    @NotNull
+    //@Nullable
     @Column(name = "isbn13")
     private String isbn13;
 
@@ -74,7 +75,7 @@ public class Book {
         this.publishDate = publishDate;
     }
 
-    public Book(@NotNull String isbn, @NotNull String isbn13, String title, String publisher, String synopsys,
+    public Book(@Nullable String isbn, @Nullable String isbn13, String title, String publisher, String synopsys,
                 String image, String authors, String subjects, Integer publishDate, BooksCollection booksCollection) {
         this.isbn = isbn;
         this.isbn13 = isbn13;
