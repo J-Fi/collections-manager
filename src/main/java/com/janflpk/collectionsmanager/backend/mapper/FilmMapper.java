@@ -1,13 +1,9 @@
 package com.janflpk.collectionsmanager.backend.mapper;
 
 
-import com.janflpk.collectionsmanager.backend.domain.Film;
-import com.janflpk.collectionsmanager.backend.domain.FilmDto;
+import com.janflpk.collectionsmanager.backend.domain.films.Film;
+import com.janflpk.collectionsmanager.backend.domain.films.FilmDto;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class FilmMapper {

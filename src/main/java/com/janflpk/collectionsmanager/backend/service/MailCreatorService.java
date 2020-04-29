@@ -2,8 +2,8 @@ package com.janflpk.collectionsmanager.backend.service;
 
 //import com.crud.tasks.config.AdminConfig;
 //import com.crud.tasks.config.CompanyConfig;
-import com.janflpk.collectionsmanager.backend.domain.Mail;
-import com.janflpk.collectionsmanager.backend.domain.MailGeneratorType;
+import com.janflpk.collectionsmanager.backend.domain.mail.Mail;
+import com.janflpk.collectionsmanager.backend.domain.mail.MailGeneratorType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.service;
 
-import com.janflpk.collectionsmanager.backend.domain.Mail;
+import com.janflpk.collectionsmanager.backend.domain.mail.Mail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.service;
 
-import com.janflpk.collectionsmanager.backend.domain.Book;
+import com.janflpk.collectionsmanager.backend.domain.books.Book;
 import com.janflpk.collectionsmanager.backend.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

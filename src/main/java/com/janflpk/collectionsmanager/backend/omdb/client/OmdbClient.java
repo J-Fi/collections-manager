@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.omdb.client;
 
-import com.janflpk.collectionsmanager.backend.domain.FilmDto;
+import com.janflpk.collectionsmanager.backend.domain.films.FilmDto;
 import com.janflpk.collectionsmanager.backend.omdb.config.OmdbConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

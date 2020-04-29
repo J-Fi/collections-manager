@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.repository;
 
-import com.janflpk.collectionsmanager.backend.domain.User;
+import com.janflpk.collectionsmanager.backend.domain.user.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

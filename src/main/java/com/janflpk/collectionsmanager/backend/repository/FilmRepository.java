@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.repository;
 
-import com.janflpk.collectionsmanager.backend.domain.Film;
+import com.janflpk.collectionsmanager.backend.domain.films.Film;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

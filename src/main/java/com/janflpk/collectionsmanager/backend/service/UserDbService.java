@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.service;
 
-import com.janflpk.collectionsmanager.backend.domain.User;
+import com.janflpk.collectionsmanager.backend.domain.user.User;
 import com.janflpk.collectionsmanager.backend.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

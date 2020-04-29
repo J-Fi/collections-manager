@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.omdb.facade;
 
-import com.janflpk.collectionsmanager.backend.domain.Film;
+import com.janflpk.collectionsmanager.backend.domain.films.Film;
 import com.janflpk.collectionsmanager.backend.mapper.FilmMapper;
 import com.janflpk.collectionsmanager.backend.service.OmdbService;
 import org.springframework.beans.factory.annotation.Autowired;

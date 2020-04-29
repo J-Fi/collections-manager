@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.isbndb.client;
 
-import com.janflpk.collectionsmanager.backend.domain.JsonBookDto;
+import com.janflpk.collectionsmanager.backend.domain.books.JsonBookDto;
 import com.janflpk.collectionsmanager.backend.isbndb.config.IsbndbConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

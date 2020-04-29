@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.service;
 
-import com.janflpk.collectionsmanager.backend.domain.FilmDto;
+import com.janflpk.collectionsmanager.backend.domain.films.FilmDto;
 import com.janflpk.collectionsmanager.backend.omdb.client.OmdbClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

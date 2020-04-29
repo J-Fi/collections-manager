@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.repository;
 
-import com.janflpk.collectionsmanager.backend.domain.BooksCollection;
+import com.janflpk.collectionsmanager.backend.domain.books.BooksCollection;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.isbndb.facade;
 
-import com.janflpk.collectionsmanager.backend.domain.Book;
+import com.janflpk.collectionsmanager.backend.domain.books.Book;
 import com.janflpk.collectionsmanager.backend.mapper.BookMapper;
 import com.janflpk.collectionsmanager.backend.service.IsbndbService;
 import org.springframework.beans.factory.annotation.Autowired;

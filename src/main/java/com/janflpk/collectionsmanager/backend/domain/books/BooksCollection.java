@@ -1,5 +1,6 @@
-package com.janflpk.collectionsmanager.backend.domain;
+package com.janflpk.collectionsmanager.backend.domain.books;
 
+import com.janflpk.collectionsmanager.backend.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

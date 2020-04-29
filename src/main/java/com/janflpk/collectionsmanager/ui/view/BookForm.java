@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.ui.view;
 
-import com.janflpk.collectionsmanager.backend.domain.Book;
+import com.janflpk.collectionsmanager.backend.domain.books.Book;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -53,7 +53,10 @@ public class BookForm extends FormLayout {
                 .bind("publishDate");
 
         Div bookFormDiv = new Div(createBookForm(), createButtonsLayout());
+        bookFormDiv.setSizeFull();
         bookFormDiv.addClassName("book-form-div");
+
+        setSizeFull();
 
         add(bookFormDiv);
     }
@@ -123,6 +126,9 @@ public class BookForm extends FormLayout {
         authors.setWidthFull();
         subjects.setWidthFull();
         publishDate.setWidthFull();
+
+        synopsys.getStyle().set("maxHeight", "100px");
+        subjects.getStyle().set("maxHeight", "100px");
 
         return new VerticalLayout(isbn, isbn13, title, publisher, synopsys, image, authors, subjects, publishDate);
     }

@@ -1,4 +1,4 @@
-package com.janflpk.collectionsmanager.backend.domain;
+package com.janflpk.collectionsmanager.backend.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

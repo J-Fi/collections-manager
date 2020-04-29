@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.backend.service;
 
-import com.janflpk.collectionsmanager.backend.domain.Film;
+import com.janflpk.collectionsmanager.backend.domain.films.Film;
 import com.janflpk.collectionsmanager.backend.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
