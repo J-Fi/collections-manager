@@ -154,6 +154,8 @@ public class BookForm extends FormLayout {
         synopsys.getStyle().set("maxHeight", "100px");
         subjects.getStyle().set("maxHeight", "100px");
 
+        title.setAutofocus(true);
+
         return new VerticalLayout(title, authors, isbn, isbn13, publisher, synopsys, image, subjects, publishDate);
     }
 
