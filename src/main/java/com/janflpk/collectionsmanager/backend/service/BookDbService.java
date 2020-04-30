@@ -16,11 +16,6 @@ public class BookDbService {
     @Autowired
     private BooksCollectionDbService booksCollectionDbService;
 
-/*    public BookDbService(BookRepository bookRepo, BooksCollectionDbService booksCollectionDbService) {
-        this.bookRepo = bookRepo;
-        this.booksCollectionDbService = booksCollectionDbService;
-    }*/
-
     public List<Book> findAll() {
         return bookRepo.findAll();
     }
@@ -33,25 +28,6 @@ public class BookDbService {
         book.setBooksCollection(booksCollectionDbService.findById(booksCollectionId));
         return bookRepo.save(book);
     }
-
-    /*public Book updateBook(Long booksCollectionId, Long bookId, Book book) {
-        List<Book> booksToUpdate = bookRepo.findAll().stream()
-                .filter(b -> b.getBooksCollection().getBooksCollectionId().equals(booksCollectionId))
-                .filter(b -> b.getBookId().equals(bookId))
-                .collect(Collectors.toList());
-
-        Book bookToUpdate = booksToUpdate.get(0);
-        bookToUpdate.setIsbn(book.getIsbn());
-        bookToUpdate.setIsbn13(book.getIsbn13());
-        bookToUpdate.setTitle(book.getTitle());
-        bookToUpdate.setPublisher(book.getPublisher());
-        bookToUpdate.setSynopsys(book.getSynopsys());
-        bookToUpdate.setImage(book.getImage());
-        bookToUpdate.setAuthors(book.getAuthors());
-        bookToUpdate.setSubjects(book.getSubjects());
-        bookToUpdate.setPublishDate(book.getPublishDate());
-        return bookRepo.save(bookToUpdate);
-    }*/
 
     public void deleteBook(final Long id) {
         bookRepo.deleteById(id);
