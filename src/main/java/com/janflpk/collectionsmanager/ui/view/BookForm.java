@@ -28,6 +28,10 @@ import java.util.regex.Pattern;
 public class BookForm extends FormLayout {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookForm.class);
 
+    private static final Integer ISBN_LENGTH_10 = 10;
+    private static final Integer ISBN_LENGTH_13 = 13;
+    private static final Integer YEAR_LENGTH_4 = 4;
+
     private final TextField isbn = new TextField("ISBN");
     private final TextField isbn13 = new TextField("ISBN13");
     private final TextField title = new TextField("Tytuł");
@@ -47,15 +51,13 @@ public class BookForm extends FormLayout {
     public BookForm() {
         addClassName("book-form");
 
-        //binder.bind(isbn, "isbn");
         binder.forField(isbn)
                 .withNullRepresentation("")
-                .withValidator(e -> (e == null || Pattern.matches("\\d{10}+", e)),"Wprowadź numer 10-cyfrowy")
+                .withValidator(e -> (e == null || validateInput(ISBN_LENGTH_10, e)),"Wprowadź numer 10-cyfrowy")
                 .bind("isbn");
-        LOGGER.info("isbn.getValue().length() = " + isbn.getValue().length() + " " + isbn.getValue().getClass());
         binder.forField(isbn13)
                 .withNullRepresentation("")
-                .withValidator(e -> (e == null || Pattern.matches("\\d{13}+", e)), "Wprowadź numer 13-cyfrowy")
+                .withValidator(e -> (e == null || validateInput(ISBN_LENGTH_13, e)), "Wprowadź numer 13-cyfrowy")
                 .bind("isbn13");
         binder.bind(title, "title");
         binder.bind(publisher, "publisher");
@@ -65,10 +67,10 @@ public class BookForm extends FormLayout {
         binder.bind(subjects, "subjects");
         binder.forField(publishDate)
                 .withNullRepresentation("")
-                .withValidator(e -> Pattern.matches("\\d{4}+", e), "Wprowadź rok 4-cyfrowy")
+                .withValidator(e -> (e == null || validateInput(YEAR_LENGTH_4, e)), "Wprowadź rok 4-cyfrowy")
                 .withConverter(new StringToIntegerConverterNoWhiteCharacters("Wprowadź liczbę!"))
                 .bind("publishDate");
-
+        LOGGER.info("Binding data was successfully completed.");
         Div bookFormDiv = new Div(createBookForm(), createButtonsLayout());
         bookFormDiv.setSizeFull();
         bookFormDiv.addClassName("book-form-div");
@@ -111,6 +113,10 @@ public class BookForm extends FormLayout {
         if (binder.isValid()) {
             fireEvent(new SaveBookEvent(this, binder.getBean()));
         }
+    }
+
+    private boolean validateInput(Integer numberLength, String inputValue) {
+        return Pattern.matches("\\d{" + numberLength + "}+", inputValue);
     }
 
     private Component createBookForm() {

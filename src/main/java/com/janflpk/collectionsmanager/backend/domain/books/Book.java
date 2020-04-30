@@ -89,6 +89,11 @@ public class Book {
         this.booksCollection = booksCollection;
     }
 
+    public Book(String isbn, String isbn13) {
+        this.isbn = isbn;
+        this.isbn13 = isbn13;
+    }
+
     @Override
     public String toString() {
         return "Book{" +

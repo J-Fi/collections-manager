@@ -82,7 +82,7 @@ public class BookListView extends VerticalLayout {
     }
 
     private void configureFilterText() {
-        filterText.setPlaceholder("Wpisz tutaj...");
+        filterText.setPlaceholder("Wpisz tytuł lub autora...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(event -> updateBookList());
@@ -107,7 +107,7 @@ public class BookListView extends VerticalLayout {
 
         label = new Label("");
         label.getElement().getStyle().set("color", "red");
-        label.getElement().getStyle().set("font-size", "15px");
+        label.getElement().getStyle().set("font-size", "10px");
         label.setVisible(false);
         HorizontalLayout buttons = new HorizontalLayout(search, cancel);
         VerticalLayout layout = new VerticalLayout(label, isbnInput, buttons);
@@ -169,13 +169,13 @@ public class BookListView extends VerticalLayout {
             bookCover.setMaxHeight("300px");
             bookCover.setMinWidth("200px");
             bookCover.setMinHeight("200px");
-            //bookCover.setSizeFull();
             return bookCover;
         }
         return new Image();
     }
 
     private void addNewBook() {
+        LOGGER.info("addNewBook() method was called...");
         bookGrid.asSingleSelect().clear();
         editBook(new Book());
     }
@@ -183,8 +183,10 @@ public class BookListView extends VerticalLayout {
     private void editBook(Book book) {
         if(book == null) {
             closeBookForm();
+            LOGGER.info("closeBookForm() was called by editBook(Book book) and book value was " + book + " / " + book.toString());
         } else {
             getBookViewPopupWindow(book);
+            LOGGER.info("getBookViewPopupWindow(book) method was called by editBook(Book book) and book value was " + book.toString());
             //bookForm.addClassName("editing");
         }
     }
@@ -209,21 +211,35 @@ public class BookListView extends VerticalLayout {
         bookForm.setBook(null);
         bookViewPopupWindow.removeAll();
         bookViewPopupWindow.close();
+        updateBookList();
         //bookForm.addClassName("editing");
     }
 
     public void searchBookByIsbn() {
-        Book book = isbndbFacade.getBook(getIsbnInput().getValue());
+        String bookIsbn = getIsbnInput().getValue();
+        Book book = isbndbFacade.getBook(bookIsbn);
         isbnInput.clear();
+        label.setVisible(false);
         isbnInputPopupWindow.close();
         if(book == null) {
             addNewBook();
+            LOGGER.info("addNewBook() was called by searchBookByIsbn() method and book value " + book.toString());
         } else {
-            editBook(book);
+            editBook(getBookWithIsbn(bookIsbn));
+            LOGGER.info("editBook(book); was called by searchBookByIsbn() method and book value " + book.toString());
         }
     }
 
     public void cancelIsbnSearch() {
         isbnInputPopupWindow.close();
+    }
+
+    public Book getBookWithIsbn (String isbnNumber) {
+        if (isbnNumber.length() == 10) {
+            return new Book(isbnNumber, null);
+        } else if (isbnNumber.length() == 13){
+            return new Book(null, isbnNumber);
+        }
+        return new Book();
     }
 }
