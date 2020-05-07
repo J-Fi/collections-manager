@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,7 +33,7 @@ public class BookDbServiceTest {
 
     @Test
     public void shouldFetchAllBooksContainingSpecificStringTest() {
-        //given
+        //Given
         Book book1 = new Book("1234567890", "1234567890123","title1",
                 "publisher1", "synopsys1", "image1",
                 "authors1", "subjects1", 2001);
@@ -49,32 +49,45 @@ public class BookDbServiceTest {
         list.add(book2);
 
         when(bookRepository.findAll("book")).thenReturn(list);
-        //when
+        //When
         List<Book> returnedList = bookDbService.findAll("book");
 
-        //then
+        //Then
         Assert.assertEquals(2, returnedList.size());
     }
 
     @Test
     public void shouldSaveBookTest() {
-        //given
+        //Given
         Book book1 = new Book("1234567890", "1234567890123","title1",
                 "publisher1", "synopsys1", "image1",
                 "authors1", "subjects1", 2001);
 
         BooksCollection booksCollection = new BooksCollection(1L, "MyBooks");
 
-        //book1.setBooksCollection(booksCollection);
-        //System.out.println(book1.getBooksCollection().getBooksCollectionId());
-
         when(bookRepository.save(book1)).thenReturn(book1);
         when(booksCollectionDbService.findById(1L)).thenReturn(booksCollection);
-        //when
+        //When
         Book bookReturned = bookDbService.saveBook(book1, booksCollection.getBooksCollectionId());
 
-        //then
+        //Then
         Assert.assertEquals("1234567890", bookReturned.getIsbn());
-        Assert.assertEquals(Long.valueOf(1L), Long.valueOf(bookReturned.getBooksCollection().getBooksCollectionId()));
+        Assert.assertEquals(Long.valueOf(1L), bookReturned.getBooksCollection().getBooksCollectionId());
+    }
+
+    @Test
+    public void shouldDeleteBook() {
+        //Given
+        BooksCollection bc = new BooksCollection(2L, "MyBooks");
+        Book book1 = new Book("1234567890", "1234567890123","title1",
+                "publisher1", "synopsys1", "image1",
+                "authors1", "subjects1", 2001, bc);
+        book1.setBookId(1L);
+
+        //When
+        bookDbService.deleteBook(book1.getBookId());
+
+        //Then
+        verify(bookRepository, times(1)).deleteById(eq(book1.getBookId()));
     }
 }

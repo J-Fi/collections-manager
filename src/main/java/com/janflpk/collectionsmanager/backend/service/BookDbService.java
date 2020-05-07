@@ -16,9 +16,9 @@ public class BookDbService {
     @Autowired
     private BooksCollectionDbService booksCollectionDbService;
 
-    public List<Book> findAll() {
+/*    public List<Book> findAll() {
         return bookRepo.findAll();
-    }
+    }*/
 
     public List<Book> findAll(String searchText) {
         return bookRepo.findAll(searchText);
