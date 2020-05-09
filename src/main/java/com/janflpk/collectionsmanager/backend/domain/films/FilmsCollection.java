@@ -40,7 +40,8 @@ public class  FilmsCollection {
     )
     private List<Film> films = new ArrayList<>();
 
-    public FilmsCollection(String collectionName) {
+    public FilmsCollection(Long filmsCollectionId, String collectionName) {
+        this.filmsCollectionId = filmsCollectionId;
         this.collectionName = collectionName;
     }
 }

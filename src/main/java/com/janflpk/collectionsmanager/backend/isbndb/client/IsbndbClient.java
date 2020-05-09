@@ -32,7 +32,7 @@ public class IsbndbClient {
             headers.add("Accept", "*/*");
             HttpEntity request = new HttpEntity<>(headers);
             ResponseEntity<JsonBookDto> bookResponse = restTemplate.exchange(isbndbConfig.getIsbndbApiEndpoint() + "/" + isbn, HttpMethod.GET, request, JsonBookDto.class);
-            return Optional.ofNullable(bookResponse).orElse(new ResponseEntity<JsonBookDto>(HttpStatus.NOT_FOUND));
+            return Optional.ofNullable(bookResponse).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (RestClientException e) {
             LOGGER.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

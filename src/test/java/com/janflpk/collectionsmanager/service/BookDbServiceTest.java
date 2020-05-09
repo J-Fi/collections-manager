@@ -49,6 +49,7 @@ public class BookDbServiceTest {
         list.add(book2);
 
         when(bookRepository.findAll("book")).thenReturn(list);
+
         //When
         List<Book> returnedList = bookDbService.findAll("book");
 

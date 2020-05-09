@@ -73,4 +73,20 @@ public class Film {
         this.posterLink = posterLink;
         this.production = production;
     }
+
+    public Film(String filmTitle, String year, String runtime, String directorName, String writers, String actors,
+                String plot, String language, String country, String posterLink, String production, FilmsCollection filmsCollection) {
+        this.filmTitle = filmTitle;
+        this.year = year;
+        this.runtime = runtime;
+        this.directorName = directorName;
+        this.writers = writers;
+        this.actors = actors;
+        this.plot = plot;
+        this.language = language;
+        this.country = country;
+        this.posterLink = posterLink;
+        this.production = production;
+        this.filmsCollection = filmsCollection;
+    }
 }
