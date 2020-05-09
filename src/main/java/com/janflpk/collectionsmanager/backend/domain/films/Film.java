@@ -89,4 +89,23 @@ public class Film {
         this.production = production;
         this.filmsCollection = filmsCollection;
     }
+
+    @Override
+    public String toString() {
+        return "Film{" +
+                "filmId=" + filmId +
+                ", filmTitle='" + filmTitle + '\'' +
+                ", year='" + year + '\'' +
+                ", runtime='" + runtime + '\'' +
+                ", directorName='" + directorName + '\'' +
+                ", writers='" + writers + '\'' +
+                ", actors='" + actors + '\'' +
+                ", plot='" + plot + '\'' +
+                ", language='" + language + '\'' +
+                ", country='" + country + '\'' +
+                ", posterLink='" + posterLink + '\'' +
+                ", production='" + production + '\'' +
+                ", filmsCollection=" + filmsCollection +
+                '}';
+    }
 }
