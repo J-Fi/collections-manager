@@ -17,7 +17,6 @@ public class BookMapper {
     public String mapAuthorsListToString(List<Author> authors) {
         if(authors != null) {
             String s = authors.stream().map(Object::toString).collect(Collectors.joining("; "));
-            System.out.println("String: " + s);
             return s;
         }
         return "";
@@ -25,14 +24,12 @@ public class BookMapper {
 
     public List<Author> mapStringToAuthorsList(String authors) {
         List<Author> list = Stream.of(authors.split("; ")).map(Author::new).collect(Collectors.toList());
-        System.out.println(list.size());
         return list;
     }
 
     public String mapSubjectsListToString(List<Subject> subjects) {
         if (subjects != null) {
             String s = subjects.stream().map(Object::toString).collect(Collectors.joining("; "));
-            System.out.println("String: " + s);
             return s;
         }
         return "";
@@ -41,7 +38,6 @@ public class BookMapper {
     public List<Subject> mapStringToSubjectsList(String subjects) {
         if (subjects != null) {
             List<Subject> list = Stream.of(subjects.split("; ")).map(Subject::new).collect(Collectors.toList());
-            System.out.println(list.size());
             return list;
         }
         return new ArrayList<>();
