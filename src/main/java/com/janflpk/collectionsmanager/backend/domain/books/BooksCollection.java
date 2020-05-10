@@ -57,5 +57,4 @@ public class BooksCollection {
         this.booksCollectionId = booksCollectionId;
         this.collectionName = collectionName;
     }
-
 }

@@ -15,7 +15,7 @@ public class EmailScheduler {
     @Autowired
     private SimpleEmailService simpleEmailService;
 
-    @Scheduled(fixedDelay = 10000000) //@Scheduled(cron = "0 0 10 * * *")
+    @Scheduled(fixedDelay = 1000000000) //@Scheduled(cron = "0 0 10 * * *")
     public void sendInformationEmail() {
         simpleEmailService.send(new Mail(
                 MailGeneratorType.EMAIL_FROM_EMAIL_SCHEDULER,
