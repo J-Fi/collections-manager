@@ -44,4 +44,8 @@ public class  FilmsCollection {
         this.filmsCollectionId = filmsCollectionId;
         this.collectionName = collectionName;
     }
+
+    public FilmsCollection(String collectionName) {
+        this.collectionName = collectionName;
+    }
 }

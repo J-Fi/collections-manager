@@ -30,9 +30,10 @@ public class BooksCollectionDbServiceTest {
     private BooksCollectionRepository booksCollectionRepository;
 
     @Test
-    public void shouldSaveBooksCollection() {
+    public void shouldSaveBooksCollectionTest() {
         //Given
-        User user = new User(1L, "Name", "Surname", "birthday", "email", "login", "password");
+        User user = new User(1L, "Name", "Surname", "birthday",
+                "email", "login", "password");
         List<Book> books = new ArrayList();
         books.add(new Book());
         BooksCollection bc = new BooksCollection("MyBooksCollection");
@@ -50,7 +51,7 @@ public class BooksCollectionDbServiceTest {
     }
 
     @Test
-    public void shouldDeleteBooksCollection() {
+    public void shouldDeleteBooksCollectionTest() {
         //Given
         User user = new User(1L, "Name", "Surname", "birthday", "email", "login", "password");
         List<Book> books = new ArrayList();
@@ -65,7 +66,7 @@ public class BooksCollectionDbServiceTest {
     }
 
     @Test
-    public void shouldFetchBooksCollectionById() {
+    public void shouldFetchBooksCollectionByIdTest() {
         //Given
         User user = new User(1L, "Name", "Surname", "birthday", "email", "login", "password");
         List<Book> books = new ArrayList();
