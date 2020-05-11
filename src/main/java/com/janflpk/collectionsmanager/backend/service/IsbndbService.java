@@ -16,9 +16,9 @@ public class IsbndbService {
     @Autowired
     private IsbndbClient isbndbClient;
 
-    public BookDto getJsonBookDto(String isbn) {
+    public BookDto getBookDto(String isbn) {
         try {
-            BookDto bookDto = isbndbClient.getJsonBookDto(isbn).getBody().getBookDto();
+            BookDto bookDto = isbndbClient.getJsonBookDto(isbn).getBookDto();
             return Optional.ofNullable(bookDto).orElse(new BookDto());
         } catch (Exception e) {
             LOGGER.info(e.getMessage());

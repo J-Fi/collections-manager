@@ -16,6 +16,6 @@ public class IsbndbFacade {
     private BookMapper bookMapper;
 
     public Book getBook(String isbn) {
-        return bookMapper.mapToBook(isbndbService.getJsonBookDto(isbn));
+        return bookMapper.mapToBook(isbndbService.getBookDto(isbn));
     }
 }

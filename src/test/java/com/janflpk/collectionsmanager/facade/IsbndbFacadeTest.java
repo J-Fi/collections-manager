@@ -47,7 +47,7 @@ public class IsbndbFacadeTest {
                 listAuthors, listSubjects,
                 2021);
 
-        when(isbndbService.getJsonBookDto("1234")).thenReturn(bookDto);
+        when(isbndbService.getBookDto("1234")).thenReturn(bookDto);
 
         //When
         Book book = isbndbFacade.getBook("1234");
