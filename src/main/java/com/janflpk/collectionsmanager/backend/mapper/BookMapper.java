@@ -19,7 +19,7 @@ public class BookMapper {
             String s = authors.stream().map(Object::toString).collect(Collectors.joining("; "));
             return s;
         }
-        return "";
+        return null;
     }
 
     public List<Author> mapStringToAuthorsList(String authors) {
@@ -32,7 +32,7 @@ public class BookMapper {
             String s = subjects.stream().map(Object::toString).collect(Collectors.joining("; "));
             return s;
         }
-        return "";
+        return null;
     }
 
     public List<Subject> mapStringToSubjectsList(String subjects) {

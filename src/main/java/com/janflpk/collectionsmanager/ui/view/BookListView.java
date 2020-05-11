@@ -174,10 +174,10 @@ public class BookListView extends VerticalLayout {
         return new Image();
     }
 
-    private void addNewBook() {
+    private void addNewBook(Book book) {
         LOGGER.info("addNewBook() method was called...");
         bookGrid.asSingleSelect().clear();
-        editBook(new Book());
+        editBook(book);
     }
 
     private void editBook(Book book) {
@@ -221,11 +221,14 @@ public class BookListView extends VerticalLayout {
         isbnInput.clear();
         label.setVisible(false);
         isbnInputPopupWindow.close();
-        if(book == null) {
-            addNewBook();
+        LOGGER.info("book.equals(new Book()) = " + book.equals(new Book()));
+        LOGGER.info("book = " + book.toString());
+        LOGGER.info("new Book()) = " + new Book().toString());
+        if(book.equals(new Book())) {
+            addNewBook(getBookWithIsbn(bookIsbn));
             LOGGER.info("addNewBook() was called by searchBookByIsbn() method and book value " + book.toString());
         } else {
-            editBook(getBookWithIsbn(bookIsbn));
+            editBook(book);
             LOGGER.info("editBook(book); was called by searchBookByIsbn() method and book value " + book.toString());
         }
     }
