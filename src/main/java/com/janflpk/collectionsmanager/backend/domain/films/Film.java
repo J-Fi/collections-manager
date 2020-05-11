@@ -108,4 +108,49 @@ public class Film {
                 ", filmsCollection=" + filmsCollection +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Film)) return false;
+
+        Film film = (Film) o;
+
+        if (getFilmId() != null ? !getFilmId().equals(film.getFilmId()) : film.getFilmId() != null) return false;
+        if (getFilmTitle() != null ? !getFilmTitle().equals(film.getFilmTitle()) : film.getFilmTitle() != null)
+            return false;
+        if (getYear() != null ? !getYear().equals(film.getYear()) : film.getYear() != null) return false;
+        if (getRuntime() != null ? !getRuntime().equals(film.getRuntime()) : film.getRuntime() != null) return false;
+        if (getDirectorName() != null ? !getDirectorName().equals(film.getDirectorName()) : film.getDirectorName() != null)
+            return false;
+        if (getWriters() != null ? !getWriters().equals(film.getWriters()) : film.getWriters() != null) return false;
+        if (getActors() != null ? !getActors().equals(film.getActors()) : film.getActors() != null) return false;
+        if (getPlot() != null ? !getPlot().equals(film.getPlot()) : film.getPlot() != null) return false;
+        if (getLanguage() != null ? !getLanguage().equals(film.getLanguage()) : film.getLanguage() != null)
+            return false;
+        if (getCountry() != null ? !getCountry().equals(film.getCountry()) : film.getCountry() != null) return false;
+        if (getPosterLink() != null ? !getPosterLink().equals(film.getPosterLink()) : film.getPosterLink() != null)
+            return false;
+        if (getProduction() != null ? !getProduction().equals(film.getProduction()) : film.getProduction() != null)
+            return false;
+        return getFilmsCollection() != null ? getFilmsCollection().equals(film.getFilmsCollection()) : film.getFilmsCollection() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getFilmId() != null ? getFilmId().hashCode() : 0;
+        result = 31 * result + (getFilmTitle() != null ? getFilmTitle().hashCode() : 0);
+        result = 31 * result + (getYear() != null ? getYear().hashCode() : 0);
+        result = 31 * result + (getRuntime() != null ? getRuntime().hashCode() : 0);
+        result = 31 * result + (getDirectorName() != null ? getDirectorName().hashCode() : 0);
+        result = 31 * result + (getWriters() != null ? getWriters().hashCode() : 0);
+        result = 31 * result + (getActors() != null ? getActors().hashCode() : 0);
+        result = 31 * result + (getPlot() != null ? getPlot().hashCode() : 0);
+        result = 31 * result + (getLanguage() != null ? getLanguage().hashCode() : 0);
+        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
+        result = 31 * result + (getPosterLink() != null ? getPosterLink().hashCode() : 0);
+        result = 31 * result + (getProduction() != null ? getProduction().hashCode() : 0);
+        result = 31 * result + (getFilmsCollection() != null ? getFilmsCollection().hashCode() : 0);
+        return result;
+    }
 }

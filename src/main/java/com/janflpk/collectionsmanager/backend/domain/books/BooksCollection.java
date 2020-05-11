@@ -57,4 +57,28 @@ public class BooksCollection {
         this.booksCollectionId = booksCollectionId;
         this.collectionName = collectionName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BooksCollection)) return false;
+
+        BooksCollection that = (BooksCollection) o;
+
+        if (getBooksCollectionId() != null ? !getBooksCollectionId().equals(that.getBooksCollectionId()) : that.getBooksCollectionId() != null)
+            return false;
+        if (getCollectionName() != null ? !getCollectionName().equals(that.getCollectionName()) : that.getCollectionName() != null)
+            return false;
+        if (getUser() != null ? !getUser().equals(that.getUser()) : that.getUser() != null) return false;
+        return getBooks() != null ? getBooks().equals(that.getBooks()) : that.getBooks() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getBooksCollectionId() != null ? getBooksCollectionId().hashCode() : 0;
+        result = 31 * result + (getCollectionName() != null ? getCollectionName().hashCode() : 0);
+        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
+        result = 31 * result + (getBooks() != null ? getBooks().hashCode() : 0);
+        return result;
+    }
 }
