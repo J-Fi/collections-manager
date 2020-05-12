@@ -34,6 +34,7 @@ public class IsbndbClient {
             headers.add("Authorization", "43705_7acf1129c6d7b89b9e4c467fc3d74355");
             headers.add("Accept", "*/*");
             HttpEntity request = new HttpEntity<>(headers);
+            LOGGER.info("IsbndbClient request " + request);
             ResponseEntity<JsonBookDto> bookResponse = restTemplate.exchange(isbndbConfig.getIsbndbApiEndpoint() + "/" + isbn, HttpMethod.GET, request, JsonBookDto.class);
             return Optional.ofNullable(bookResponse.getBody()).orElse(new JsonBookDto());
         } catch (RestClientException e) {

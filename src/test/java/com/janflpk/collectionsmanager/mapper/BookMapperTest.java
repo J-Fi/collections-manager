@@ -27,20 +27,20 @@ public class BookMapperTest {
     private BookMapper bookMapper;
 
     @Test
-    public void mapAuthorsListToStringWhenListIsNullOrEmpty() {
+    public void mapAuthorsListToStringWhenListIsNull() {
         //Given
         List<Author> authorsNull = null;
-        List<Author> authorsEmpty = new ArrayList<>();
+        List<Author> authorsEmpty = null;
 
         //When
         LOGGER.info("authorsNull' list in mapAuthorsListToStringWhenListIsNull() should be null and is = " + authorsNull);
-        LOGGER.info("authorsEmpty' list in mapAuthorsListToStringWhenListIsNull() should be empty and is = " + authorsEmpty.isEmpty());
+        LOGGER.info("authorsEmpty' list in mapAuthorsListToStringWhenListIsNull() should be empty and is = " + authorsEmpty);
         String authorsNullReturned = bookMapper.mapAuthorsListToString(authorsNull);
         String authorsEmptyReturned = bookMapper.mapAuthorsListToString(authorsEmpty);
 
         //Then
-        Assert.assertEquals("", authorsNullReturned);
-        Assert.assertEquals("", authorsEmptyReturned);
+        Assert.assertNull(authorsNullReturned);
+        Assert.assertNull(authorsEmptyReturned);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class BookMapperTest {
     public void mapToBookWhenBookDtoIsNullOrEmptyTest() {
         //Given
         BookDto bookDtoNull = null;
-        BookDto bookDtoEmpty = new BookDto();
+        BookDto bookDtoEmpty = null;
 
         //When
         Book bookNull = bookMapper.mapToBook(bookDtoNull);
@@ -117,13 +117,13 @@ public class BookMapperTest {
         Assert.assertNotNull(bookEmpty);
         Assert.assertNull(bookEmpty.getIsbn());
         Assert.assertNull(bookEmpty.getIsbn13());
-        Assert.assertTrue(bookEmpty.getAuthors().isEmpty());
+        Assert.assertNull(bookEmpty.getAuthors());
         Assert.assertNull(bookEmpty.getTitle());
         Assert.assertNull(bookEmpty.getImage());
         Assert.assertNull(bookEmpty.getSynopsys());
         Assert.assertNull(bookEmpty.getPublisher());
         Assert.assertNull(bookEmpty.getPublishDate());
-        Assert.assertTrue(bookEmpty.getSubjects().isEmpty());
+        Assert.assertNull(bookEmpty.getSubjects());
     }
 
     @Test

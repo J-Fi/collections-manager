@@ -5,6 +5,7 @@ import com.janflpk.collectionsmanager.backend.domain.books.BookDto;
 import com.janflpk.collectionsmanager.backend.domain.books.JsonBookDto;
 import com.janflpk.collectionsmanager.backend.domain.books.Subject;
 import com.janflpk.collectionsmanager.backend.isbndb.client.IsbndbClient;
+import com.janflpk.collectionsmanager.backend.isbndb.config.IsbndbConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,11 +27,14 @@ public class IsbndbClientTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IsbndbClientTest.class);
 
+    @InjectMocks
+    private IsbndbClient isbndbClient;
+
     @Mock
     private RestTemplate restTemplate;
 
-    @InjectMocks
-    private IsbndbClient isbndbClient = new IsbndbClient();
+    @Mock
+    private IsbndbConfig isbndbConfig;
 
     @Test
     public void shouldFetchJsonBookDtoTest() {
@@ -55,14 +59,17 @@ public class IsbndbClientTest {
         headers.add("Accept", "*/*");
         HttpEntity request = new HttpEntity<>(headers);
 
+        when(isbndbConfig.getIsbndbApiEndpoint()).thenReturn("https://api2.isbndb.com/book");
         when(restTemplate.exchange("https://api2.isbndb.com/book/isbn1", HttpMethod.GET, request, JsonBookDto.class))
-                .thenReturn(new ResponseEntity<JsonBookDto>(jsonBookDto, HttpStatus.OK));
+                .thenReturn(new ResponseEntity<JsonBookDto>(jsonBookDto, headers, HttpStatus.OK));
 
         //When
+        LOGGER.info("isbndbClient.getJsonBookDto(\"isbn1\") " + new ResponseEntity<JsonBookDto>(jsonBookDto, headers, HttpStatus.NOT_FOUND));
         JsonBookDto jsonBookDtoReturned = isbndbClient.getJsonBookDto("isbn1");
         LOGGER.info("jsonBookDtoReturned " + jsonBookDtoReturned);
 
         //Then
         Assert.assertEquals(jsonBookDto, jsonBookDtoReturned);
+        Assert.assertEquals(jsonBookDto.getBookDto().getTitle(), jsonBookDtoReturned.getBookDto().getTitle());
     }
 }
