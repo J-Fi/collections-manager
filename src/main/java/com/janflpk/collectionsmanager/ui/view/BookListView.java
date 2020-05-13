@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.util.regex.Pattern;
 
 @Getter
-@Route(value = "", layout = MainLayout.class)
+@Route(value = "books", layout = MainLayout.class)
 public class BookListView extends VerticalLayout {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(BookListView.class);
