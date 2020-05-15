@@ -90,6 +90,10 @@ public class Film {
         this.filmsCollection = filmsCollection;
     }
 
+    public Film(String filmTitle) {
+        this.filmTitle = filmTitle;
+    }
+
     @Override
     public String toString() {
         return "Film{" +
