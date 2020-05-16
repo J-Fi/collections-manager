@@ -28,8 +28,8 @@ public class FilmListView extends VerticalLayout {
 
     private FilmForm filmForm;
 
-    private Dialog omdbInputPopupWindow;
-    private Dialog filmViewPopupWindow;
+    private Dialog omdbInputPopupWindow = new Dialog();
+    private Dialog filmViewPopupWindow = new Dialog();
 
     private TextField filmFilterText = new TextField();
     private TextField omdbInput = new TextField();
@@ -72,7 +72,7 @@ public class FilmListView extends VerticalLayout {
                 .setFlexGrow(30)
                 .setResizable(true);
         filmGrid.getColumnByKey("year")
-        setWidth("150px");
+                .setWidth("150px");
 
         filmGrid.asSingleSelect().addValueChangeListener(e -> editFilm(e.getValue()));
     }
@@ -102,6 +102,7 @@ public class FilmListView extends VerticalLayout {
 
         HorizontalLayout buttons = new HorizontalLayout(search, cancel);
         VerticalLayout layout = new VerticalLayout(omdbInput, buttons);
+        omdbInputPopupWindow.add(layout);
     }
 
     private void configureFilmViewPopupWindow() {
@@ -169,7 +170,7 @@ public class FilmListView extends VerticalLayout {
     }
 
     private void saveFilm(FilmForm.SaveFilmEvent event) {
-        filmDbService.saveFilm(event.getFilm(), 1L);
+        filmDbService.saveFilm(event.getFilm(), 37L);
         updateFilmList();
         closeFilmForm();
     }

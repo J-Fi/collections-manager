@@ -42,8 +42,7 @@ public class FilmForm extends FormLayout {
     public FilmForm() {
         addClassName("film-form");
 
-        FilmForm filmForm = new FilmForm();
-        binder.bindInstanceFields(filmForm);
+        binder.bindInstanceFields(this);
 
         Div filmFormDiv = new Div(createFilmForm(), createButtonsLayout());
         filmFormDiv.setSizeFull();
