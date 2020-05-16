@@ -8,6 +8,12 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@NamedQuery(
+        name = "Film.findAll",
+        query = "FROM Film WHERE lower(filmTitle) like (concat('%', :searchText, '%')) or " +
+                "lower(directorName) like (concat('%', :searchText, '%'))"
+)
+
 @Getter
 @Setter
 @AllArgsConstructor

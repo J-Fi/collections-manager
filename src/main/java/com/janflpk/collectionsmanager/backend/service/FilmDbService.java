@@ -19,6 +19,10 @@ public class FilmDbService {
     @Autowired
     private FilmsCollectionDbService filmsCollectionDbService;
 
+    public List<Film> findAll(String searchText) {
+        return filmRepo.findAll(searchText);
+    }
+
     public Film saveFilm (Film film, Long filmsCollectionId) {
         film.setFilmsCollection(filmsCollectionDbService.findById(filmsCollectionId));
         return filmRepo.save(film);

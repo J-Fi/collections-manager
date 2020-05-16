@@ -1,7 +1,9 @@
 package com.janflpk.collectionsmanager.backend.repository;
 
 import com.janflpk.collectionsmanager.backend.domain.films.Film;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -17,4 +19,7 @@ public interface FilmRepository extends CrudRepository<Film, Long> {
 
     @Override
     List<Film> findAll();
+
+    @Query
+    List<Film> findAll(@Param("searchText") String searchText);
 }
