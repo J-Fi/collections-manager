@@ -11,10 +11,10 @@
     flex: 2;
 }
 
-.book-list-view .book-form {
+/*.book-list-view .book-form {
     flex: 1;
     padding: var(--lumo-space-m);
-}
+}*/
 
 .book-form .buttons-layout {
     display: flex;
