@@ -2,6 +2,7 @@ package com.janflpk.collectionsmanager.service;
 
 import com.janflpk.collectionsmanager.backend.domain.films.Film;
 import com.janflpk.collectionsmanager.backend.domain.films.FilmsCollection;
+import com.janflpk.collectionsmanager.backend.domain.user.User;
 import com.janflpk.collectionsmanager.backend.repository.FilmRepository;
 import com.janflpk.collectionsmanager.backend.service.FilmDbService;
 import com.janflpk.collectionsmanager.backend.service.FilmsCollectionDbService;
@@ -35,6 +36,32 @@ public class FilmDbServiceTest {
 
     @MockBean
     private FilmsCollectionDbService filmsCollectionDbService;
+
+    @Test
+    public void shouldFetchAllFilmsByText() {
+        //Given
+        List<Film> filmList = new ArrayList<>();
+        User user = new User(1L, "userFirstName", "userLastName", "birthsday", "email", "login", "password");
+        FilmsCollection filmsCollection = new FilmsCollection(1L, "My Films", user, filmList);
+
+        Film film1 = new Film(1L, "FilmTitle1", "2000", "163", "DirectorName1",
+                "Writers1", "Actors1", "Plot1", "language1", "country1",
+                "posterLink1", "production1", filmsCollection);
+        Film film2 = new Film("FilmTitle2", "2002", "165", "DirectorName2",
+                "Writers2", "Actors2", "Plot2", "language2", "country2",
+                "posterLink2", "production2", filmsCollection);
+
+        filmList.add(film1);
+        filmList.add(film2);
+
+        when(filmRepository.findAll("Title")).thenReturn(filmList);
+
+        //When
+        List<Film> filmListReturned = filmDbService.findAll("Title");
+
+        //Then
+        Assert.assertEquals(2, filmListReturned.size());
+    }
 
     @Test
     public void shouldFetchFilmById() {
