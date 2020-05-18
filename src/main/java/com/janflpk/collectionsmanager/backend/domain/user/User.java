@@ -43,6 +43,7 @@ public class User {
     @Column(name = "login")
     private String login;
 
+    @NotNull
     @Column(name = "password")
     private String password;
 
