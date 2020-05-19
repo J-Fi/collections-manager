@@ -182,7 +182,7 @@ public class BookListView extends VerticalLayout {
         editBook(book);
     }
 
-    private void editBook(Book book) {
+    public void editBook(Book book) {
         if(book == null) {
             closeBookForm();
             LOGGER.info("closeBookForm() was called by editBook(Book book) and book value was " + book + " / " + book.toString());

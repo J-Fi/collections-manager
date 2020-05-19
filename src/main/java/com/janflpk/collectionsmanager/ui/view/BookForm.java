@@ -115,7 +115,7 @@ public class BookForm extends FormLayout {
         }
     }
 
-    private boolean validateInput(Integer numberLength, String inputValue) {
+    public boolean validateInput(Integer numberLength, String inputValue) {
         return Pattern.matches("\\d{" + numberLength + "}+", inputValue);
     }
 
