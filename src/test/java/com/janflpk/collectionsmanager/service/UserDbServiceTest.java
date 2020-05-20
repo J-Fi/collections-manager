@@ -26,7 +26,7 @@ public class UserDbServiceTest {
     private UserRepository userRepository;
 
     @Test
-    public void shouldSveUserTest() {
+    public void shouldSaveUserTest() {
         //Given
         User user = new User("Name", "Surname", "birthday",
                 "email", "login", "password");

@@ -17,6 +17,7 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.shared.Registration;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+@Getter
 public class BookForm extends FormLayout {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookForm.class);
 
@@ -116,7 +118,7 @@ public class BookForm extends FormLayout {
     }
 
     public boolean validateInput(Integer numberLength, String inputValue) {
-        return Pattern.matches("\\d{" + numberLength + "}+", inputValue);
+        return Pattern.matches("\\d{" + numberLength + "}", inputValue);
     }
 
     private Component createBookForm() {
