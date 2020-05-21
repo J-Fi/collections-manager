@@ -17,12 +17,10 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Getter
-@NoArgsConstructor
 @Route(value = "films", layout = MainLayout.class)
 public class FilmListView extends VerticalLayout {
 
@@ -40,6 +38,7 @@ public class FilmListView extends VerticalLayout {
     private Button cancel;
 
     private FilmDbService filmDbService;
+
     private OmdbFacade omdbFacade;
 
     Grid<Film> filmGrid = new Grid<>(Film.class);
