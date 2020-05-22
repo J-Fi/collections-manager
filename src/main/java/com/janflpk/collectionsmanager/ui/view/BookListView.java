@@ -226,6 +226,7 @@ public class BookListView extends VerticalLayout {
         LOGGER.info("book = " + book.toString());
         LOGGER.info("new Book()) = " + new Book().toString());
         if(book.equals(new Book())) {
+
             addNewBook(getBookWithIsbn(bookIsbn));
             LOGGER.info("addNewBook() was called by searchBookByIsbn() method and book value " + book.toString());
         } else {
@@ -235,6 +236,8 @@ public class BookListView extends VerticalLayout {
     }
 
     public void cancelIsbnSearch() {
+        isbnInput.clear();
+        label.setVisible(false);
         isbnInputPopupWindow.close();
     }
 
