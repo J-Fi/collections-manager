@@ -5,6 +5,8 @@ import com.janflpk.collectionsmanager.backend.repository.BooksCollectionReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BooksCollectionDbService {
 
@@ -21,6 +23,10 @@ public class BooksCollectionDbService {
 
     public BooksCollection findById(final Long id) {
         return booksCollectionRepo.findById(id).orElse(new BooksCollection());
+    }
+
+    public List<BooksCollection> getBooksCollectionsList() {
+        return booksCollectionRepo.findAll();
     }
 
 /*    public List<BooksCollection> findBooksCollectionsByUserId(final Long userId) {
