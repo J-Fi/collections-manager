@@ -24,12 +24,19 @@ public class FilmsCollectionRepositoryTest {
 
     @Test
     public void shouldFetchAllFilmsCollectionTest() {
-        //Given & When
+        //Given
+        FilmsCollection fc1 = new FilmsCollection();
+
+        //When
+        filmsCollectionRepository.save(fc1);
         List<FilmsCollection> allFilmsCollections = filmsCollectionRepository.findAll();
 
         //Then
         LOGGER.info("Lista wszystkich kolekcji filmów = " + allFilmsCollections.size());
         Assert.assertNotNull(allFilmsCollections);
         Assert.assertNotEquals(0, allFilmsCollections);
+
+        //clean up
+        filmsCollectionRepository.delete(fc1);
     }
 }
