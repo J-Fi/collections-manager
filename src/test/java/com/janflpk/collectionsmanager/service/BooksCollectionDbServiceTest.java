@@ -81,6 +81,25 @@ public class BooksCollectionDbServiceTest {
         //Then
         Assert.assertNotNull(bcReturned);
         Assert.assertEquals(Long.valueOf(1L), bcReturned.getBooksCollectionId());
+    }
 
+    @Test
+    public void shouldFetchAllBooksCollectionTest() {
+        //Given
+        List<BooksCollection> booksCollectionList = new ArrayList<>();
+
+        BooksCollection bc1 = new BooksCollection();
+        BooksCollection bc2 = new BooksCollection();
+
+        booksCollectionList.add(bc1);
+        booksCollectionList.add(bc2);
+
+        when(booksCollectionRepository.findAll()).thenReturn(booksCollectionList);
+
+        //When
+        List<BooksCollection> listReturned = booksCollectionDbService.findAll();
+
+        //Then
+        Assert.assertEquals(2, listReturned.size());
     }
 }
