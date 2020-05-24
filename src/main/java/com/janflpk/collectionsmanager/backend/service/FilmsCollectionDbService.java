@@ -5,6 +5,8 @@ import com.janflpk.collectionsmanager.backend.repository.FilmsCollectionReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FilmsCollectionDbService {
     @Autowired
@@ -20,5 +22,9 @@ public class FilmsCollectionDbService {
 
     public FilmsCollection findById(final Long id) {
         return filmsCollectionRepo.findById(id).orElse(new FilmsCollection());
+    }
+
+    public List<FilmsCollection> findAll() {
+        return filmsCollectionRepo.findAll();
     }
 }
