@@ -82,4 +82,24 @@ public class FilmsCollectionDbServiceTest {
         Assert.assertNotNull(fcReturned);
         Assert.assertEquals(Long.valueOf(1), fcReturned.getFilmsCollectionId());
     }
+
+    @Test
+    public void shouldFetchAllFilmsCollectionTest() {
+        //Given
+        List<FilmsCollection> filmsCollectionsList = new ArrayList<>();
+
+        FilmsCollection fc1 = new FilmsCollection();
+        FilmsCollection fc2 = new FilmsCollection();
+
+        filmsCollectionsList.add(fc1);
+        filmsCollectionsList.add(fc2);
+
+        when(filmsCollectionRepository.findAll()).thenReturn(filmsCollectionsList);
+
+        //When
+        List<FilmsCollection> listReturned = filmsCollectionDbService.findAll();
+
+        //Then
+        Assert.assertEquals(2, listReturned.size());
+    }
 }
