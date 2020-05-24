@@ -24,12 +24,19 @@ public class BooksCollectionRepositoryTest {
 
     @Test
     public void shouldFetchAllBooksCollectionTest() {
-        //Given & When
+        //Given
+        BooksCollection bc1 = new BooksCollection();
+
+        //When
+        booksCollectionRepository.save(bc1);
         List<BooksCollection> allBooksCollections = booksCollectionRepository.findAll();
 
         //Then
         LOGGER.info("Liczba kolekcji książek = " + allBooksCollections.size());
         Assert.assertNotNull(allBooksCollections);
         Assert.assertNotEquals(0, allBooksCollections);
+
+        //Clean up
+        booksCollectionRepository.delete(bc1);
     }
 }
