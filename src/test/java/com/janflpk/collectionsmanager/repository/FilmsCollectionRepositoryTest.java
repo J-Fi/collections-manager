@@ -23,7 +23,7 @@ public class FilmsCollectionRepositoryTest {
     private FilmsCollectionRepository filmsCollectionRepository;
 
     @Test
-    private void shouldFetchAllFilmsCollectionTest() {
+    public void shouldFetchAllFilmsCollectionTest() {
         //Given & When
         List<FilmsCollection> allFilmsCollections = filmsCollectionRepository.findAll();
 
