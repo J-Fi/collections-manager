@@ -25,7 +25,7 @@ public class BooksCollectionDbService {
         return booksCollectionRepo.findById(id).orElse(new BooksCollection());
     }
 
-    public List<BooksCollection> getBooksCollectionsList() {
+    public List<BooksCollection> findAll() {
         return booksCollectionRepo.findAll();
     }
 
