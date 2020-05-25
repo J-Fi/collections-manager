@@ -33,11 +33,15 @@ public class BookDbService {
         bookRepo.deleteById(id);
     }
 
-    /*public Book findById(final Long id) {
-        return bookRepo.findById(id).orElse(new Book());
+    public List<Book> findByBooksCollectionId(Long booksCollectionId) {
+        return bookRepo.findByBooksCollectionId(booksCollectionId);
     }
 
-    public List<Book> fetchBooksByBooksCollectionId(Long booksCollectionId) {
+/*    public Book findById(final Long id) {
+        return bookRepo.findById(id).orElse(new Book());
+    }*/
+
+/*    public List<Book> findByBooksCollectionId(Long booksCollectionId) {
         List<Book> list = Optional.ofNullable(bookRepo.findAll()).orElse(new ArrayList<>());
         List<Book> listFiltered = list.stream()
                 .filter(book -> (book.getBooksCollection().getBooksCollectionId()).equals(booksCollectionId))
