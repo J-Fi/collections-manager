@@ -9,11 +9,15 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@NamedQuery(
-                name = "Book.findAll",
-                query = "FROM Book WHERE lower(title) like (concat('%', :searchText, '%')) or " +
-                        "lower(authors) like (concat('%', :searchText, '%'))"
-        )
+@NamedQueries ({
+    @NamedQuery(
+            name = "Book.findAll",
+            query = "FROM Book WHERE lower(title) like (concat('%', :searchText, '%')) or " +
+                    "lower(authors) like (concat('%', :searchText, '%'))"),
+    @NamedQuery(
+            name = "Book.findByBooksCollectionId",
+            query = "FROM Book WHERE books_collection_id = :booksCollectionId")
+        })
 
 @Getter
 @Setter
