@@ -78,8 +78,4 @@ public class BookRepositoryTest {
         //Clean up
         booksCollectionRepository.deleteById(bc1.getBooksCollectionId());
     }
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 }
