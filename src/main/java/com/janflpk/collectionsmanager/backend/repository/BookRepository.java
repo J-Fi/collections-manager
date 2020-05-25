@@ -11,11 +11,14 @@ import java.util.List;
 
 @Transactional
 @Repository
-public interface BookRepository extends CrudRepository<Book, Long> {
+public interface  BookRepository extends CrudRepository<Book, Long> {
 
     @Override
     List<Book> findAll();
 
     @Query
     List<Book> findAll(@Param("searchText") String searchText);
+
+    @Query
+    List<Book> findByBooksCollectionId(@Param("booksCollectionId") Long booksCollectionId);
 }
