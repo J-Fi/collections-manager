@@ -12,7 +12,7 @@ public class BooksCollectionsListView extends VerticalLayout {
 
     private BooksCollectionDbService booksCollectionDbService;
 
-    Grid<BooksCollection> booksCollectionGrid = new Grid<>(BooksCollection.class);
+    Grid<BooksCollection> booksCollectionGrid;
 
     public BooksCollectionsListView(BooksCollectionDbService booksCollectionDbService) {
         this.booksCollectionDbService = booksCollectionDbService;
@@ -24,9 +24,10 @@ public class BooksCollectionsListView extends VerticalLayout {
     }
 
     private void configureBooksCollectionGrid() {
+        booksCollectionGrid = new Grid<>(BooksCollection.class, false);
         booksCollectionGrid.setSizeFull();
-        booksCollectionGrid.setColumns("collectionName");
-        //booksCollectionGrid.addColumn(e -> e.getBooks()).setHeader("Number of books");
+        booksCollectionGrid.addColumn(BooksCollection::getCollectionName).setHeader("Nazwa kolekcji");
+        booksCollectionGrid.addColumn(e -> e.getBooks().size()).setHeader("Liczba woluminów");
     }
 
     private void updateBooksCollectionsList() {
