@@ -45,7 +45,7 @@ public class BooksCollection {
             targetEntity = Book.class,
             mappedBy = "booksCollection",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     private List<Book> books = new ArrayList<>();
 
