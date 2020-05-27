@@ -25,8 +25,12 @@ public class FilmsCollectionsListView extends VerticalLayout {
     private void configureFilmsCollectionGrid() {
         filmsCollectionGrid = new Grid<>(FilmsCollection.class, false);
         filmsCollectionGrid.setSizeFull();
-        filmsCollectionGrid.addColumn(FilmsCollection::getCollectionName).setHeader("Nazwa kolekcji");
-        filmsCollectionGrid.addColumn(e -> e.getFilms().size()).setHeader("Liczba filmów");
+        filmsCollectionGrid.addColumn(FilmsCollection::getCollectionName)
+                .setHeader("Nazwa kolekcji")
+                .setSortable(true);
+        filmsCollectionGrid.addColumn(e -> e.getFilms().size())
+                .setHeader("Liczba filmów")
+                .setSortable(true);
     }
 
     private void updateFilmsCollectionList() {
