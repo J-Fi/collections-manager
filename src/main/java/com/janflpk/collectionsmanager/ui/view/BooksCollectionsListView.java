@@ -26,8 +26,12 @@ public class BooksCollectionsListView extends VerticalLayout {
     private void configureBooksCollectionGrid() {
         booksCollectionGrid = new Grid<>(BooksCollection.class, false);
         booksCollectionGrid.setSizeFull();
-        booksCollectionGrid.addColumn(BooksCollection::getCollectionName).setHeader("Nazwa kolekcji");
-        booksCollectionGrid.addColumn(e -> e.getBooks().size()).setHeader("Liczba woluminów");
+        booksCollectionGrid.addColumn(BooksCollection::getCollectionName)
+                .setHeader("Nazwa kolekcji")
+                .setSortable(true);
+        booksCollectionGrid.addColumn(e -> e.getBooks().size())
+                .setHeader("Liczba woluminów")
+                .setSortable(true);
     }
 
     private void updateBooksCollectionsList() {
