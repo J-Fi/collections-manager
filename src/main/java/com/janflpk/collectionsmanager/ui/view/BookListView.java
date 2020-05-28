@@ -201,7 +201,7 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
     }
 
     private void saveBook(BookForm.SaveBookEvent event) {
-        bookDbService.saveBook(event.getBook(), 3L);
+        bookDbService.saveBook(event.getBook(), booksCollectionId);
         updateBookList();
         closeBookForm();
     }
