@@ -1,7 +1,5 @@
 package com.janflpk.collectionsmanager.ui;
 
-import com.janflpk.collectionsmanager.ui.view.BookListView;
-import com.janflpk.collectionsmanager.ui.view.FilmListView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -9,12 +7,10 @@ import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.HighlightConditions;
-import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.router.RouterLayout;
 
 @CssImport("./styles/shared-styles.css")
-public class MainLayout extends AppLayout {
+public class MainLayout extends AppLayout implements RouterLayout {
 
     public MainLayout() {
         createHeader();
@@ -42,12 +38,12 @@ public class MainLayout extends AppLayout {
     }
 
     private void createDrawer() {
-        RouterLink booklistLink = new RouterLink("Kolekcja książek", BookListView.class);
-        RouterLink filmListLink = new RouterLink("Kolekcja filmów", FilmListView.class);
+        //RouterLink booklistLink = new RouterLink("Kolekcja książek", BookListView.class);
+        //RouterLink filmListLink = new RouterLink("Kolekcja filmów", FilmListView.class);
 
-        booklistLink.setHighlightCondition(HighlightConditions.sameLocation());
-        filmListLink.setHighlightCondition(HighlightConditions.sameLocation());
+        //booklistLink.setHighlightCondition(HighlightConditions.sameLocation());
+        //filmListLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-        addToDrawer(new VerticalLayout(booklistLink, filmListLink));
+        //addToDrawer(new VerticalLayout(booklistLink, filmListLink));
     }
 }

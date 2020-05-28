@@ -15,18 +15,22 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @Getter
 @Route(value = "books", layout = MainLayout.class)
-public class BookListView extends VerticalLayout {
+public class BookListView extends VerticalLayout implements HasUrlParameter<String> {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(BookListView.class);
+
+    private Long booksCollectionId;
 
     private BookForm bookForm;
 
@@ -193,7 +197,7 @@ public class BookListView extends VerticalLayout {
     }
 
     private void updateBookList() {
-        bookGrid.setItems(bookDbService.findAll(filterText.getValue()));
+        bookGrid.setItems(bookDbService.findByBooksCollectionId(booksCollectionId, filterText.getValue()));
     }
 
     private void saveBook(BookForm.SaveBookEvent event) {
@@ -249,4 +253,13 @@ public class BookListView extends VerticalLayout {
         }
         return new Book();
     }
+
+    @Override
+    public void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
+        Location location = event.getLocation();
+        QueryParameters queryParameters = location.getQueryParameters();
+        Map<String, List<String>> parameterMap = queryParameters.getParameters();
+        booksCollectionId = Long.valueOf(parameterMap.get("booksCollectionId").get(0));
+    }
+
 }

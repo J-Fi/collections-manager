@@ -108,10 +108,10 @@ public class BookDbServiceTest {
         booksList.add(book1);
         booksList.add(book2);
 
-        when(bookRepository.findByBooksCollectionId(1L)).thenReturn(booksList);
+        when(bookRepository.findByBooksCollectionId(1L, "text")).thenReturn(booksList);
 
         //When
-        List<Book> booksListReturned = bookDbService.findByBooksCollectionId(1L);
+        List<Book> booksListReturned = bookDbService.findByBooksCollectionId(1L, "text");
 
         //Then
         Assert.assertEquals(2, booksListReturned.size());

@@ -33,8 +33,8 @@ public class BookDbService {
         bookRepo.deleteById(id);
     }
 
-    public List<Book> findByBooksCollectionId(Long booksCollectionId) {
-        return bookRepo.findByBooksCollectionId(booksCollectionId);
+    public List<Book> findByBooksCollectionId(Long booksCollectionId, String searchText) {
+        return bookRepo.findByBooksCollectionId(booksCollectionId, searchText);
     }
 
 /*    public Book findById(final Long id) {

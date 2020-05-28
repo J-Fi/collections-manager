@@ -69,7 +69,7 @@ public class BookRepositoryTest {
         booksCollectionRepository.save(bc1);
 
         //When
-        List<Book> booksListReturned = bookRepository.findByBooksCollectionId(bc1.getBooksCollectionId());
+        List<Book> booksListReturned = bookRepository.findByBooksCollectionId(bc1.getBooksCollectionId(), "text");
 
         //Then
         Assert.assertNotNull(booksListReturned);

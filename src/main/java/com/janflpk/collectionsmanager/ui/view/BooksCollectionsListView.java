@@ -5,7 +5,11 @@ import com.janflpk.collectionsmanager.backend.service.BooksCollectionDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Route(value = "books-collections", layout = MainLayout.class)
 public class BooksCollectionsListView extends VerticalLayout {
@@ -32,6 +36,12 @@ public class BooksCollectionsListView extends VerticalLayout {
         booksCollectionGrid.addColumn(e -> e.getBooks().size())
                 .setHeader("Liczba woluminów")
                 .setSortable(true);
+
+        booksCollectionGrid.asSingleSelect().addValueChangeListener(e -> {
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put("booksCollectionId", e.getValue().getBooksCollectionId().toString());
+            this.getUI().ifPresent(ui -> ui.navigate("books", QueryParameters.simple(parameters)));
+        });
     }
 
     private void updateBooksCollectionsList() {
