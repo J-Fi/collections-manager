@@ -16,9 +16,8 @@ import javax.validation.constraints.NotNull;
                     "lower(authors) like (concat('%', :searchText, '%'))"),
     @NamedQuery(
             name = "Book.findByBooksCollectionId",
-            query = "FROM Book WHERE books_collection_id = :booksCollectionId and " +
-                    "(lower(title) like (concat('%', :searchText, '%')) or " +
-                    "lower(authors) like (concat('%', :searchText, '%')))")
+            query = "FROM Book WHERE books_collection_id = :booksCollectionId"
+                    )
         })
 
 @Getter

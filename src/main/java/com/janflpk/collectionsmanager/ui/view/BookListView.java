@@ -89,6 +89,7 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
     private void configureFilterText() {
         filterText.setPlaceholder("Wpisz tytuł lub autora...");
         filterText.setClearButtonVisible(true);
+        filterText.setAutofocus(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(event -> updateBookList());
     }
