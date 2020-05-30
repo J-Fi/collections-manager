@@ -6,7 +6,11 @@ import com.janflpk.collectionsmanager.ui.MainLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Route(value = "films-collections", layout = MainLayout.class)
 public class FilmsCollectionsListView extends VerticalLayout {
@@ -34,6 +38,12 @@ public class FilmsCollectionsListView extends VerticalLayout {
         filmsCollectionGrid.addColumn(e -> e.getFilms().size())
                 .setHeader("Liczba filmów")
                 .setSortable(true);
+
+        filmsCollectionGrid.asSingleSelect().addValueChangeListener(e -> {
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put("filmsCollectionId", e.getValue().getFilmsCollectionId().toString());
+            this.getUI().ifPresent(ui -> ui.navigate("films", QueryParameters.simple(parameters)));
+        });
     }
 
     private void updateFilmsCollectionList() {
