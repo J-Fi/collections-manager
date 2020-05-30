@@ -231,7 +231,6 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
         LOGGER.info("book = " + book.toString());
         LOGGER.info("new Book()) = " + new Book().toString());
         if(book.equals(new Book())) {
-
             addNewBook(getBookWithIsbn(bookIsbn));
             LOGGER.info("addNewBook() was called by searchBookByIsbn() method and book value " + book.toString());
         } else {
