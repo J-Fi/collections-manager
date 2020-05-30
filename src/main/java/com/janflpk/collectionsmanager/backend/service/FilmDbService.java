@@ -44,6 +44,10 @@ public class FilmDbService {
         return listFiltered;
     }
 
+    public List<Film> findByFilmsCollectionId(Long filmsCollectionId, String searchText) {
+        return filmRepo.findByFilmsCollectionId(filmsCollectionId, searchText);
+    }
+
     public Film updateFilm(final Long filmsCollectionId, final Long filmId, Film film) {
         List<Film> filmsToUpdate = filmRepo.findAll().stream()
                 .filter(b -> b.getFilmsCollection().getFilmsCollectionId().equals(filmsCollectionId))

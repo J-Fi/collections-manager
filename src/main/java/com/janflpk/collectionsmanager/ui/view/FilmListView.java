@@ -15,6 +15,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.AfterNavigationObserver;
+import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -22,9 +24,11 @@ import org.slf4j.LoggerFactory;
 
 @Getter
 @Route(value = "films", layout = MainLayout.class)
-public class FilmListView extends VerticalLayout {
+public class FilmListView extends VerticalLayout implements HasUrlParameter<String>, AfterNavigationObserver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FilmListView.class);
+
+    private Long filmsCollectionId;
 
     private FilmForm filmForm;
 
@@ -167,7 +171,7 @@ public class FilmListView extends VerticalLayout {
     }
 
     private void updateFilmList() {
-        filmGrid.setItems(filmDbService.findAll(filmFilterText.getValue()));
+        filmGrid.setItems(filmDbService.findByFilmsCollectionId(filmsCollectionId, filmFilterText.getValue()));
     }
 
     private void saveFilm(FilmForm.SaveFilmEvent event) {

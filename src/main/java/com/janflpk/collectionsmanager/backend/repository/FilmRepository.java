@@ -22,4 +22,7 @@ public interface FilmRepository extends CrudRepository<Film, Long> {
 
     @Query
     List<Film> findAll(@Param("searchText") String searchText);
+
+    @Query
+    List<Film> findByFilmsCollectionId(@Param("filmsCollectionId") Long filmsCollectionId, @Param("searchText") String searchText);
 }
