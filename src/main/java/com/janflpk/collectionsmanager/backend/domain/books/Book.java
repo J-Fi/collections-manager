@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
                     "(lower(title) like (concat('%', :searchText, '%')) or " +
                     "lower(authors) like (concat('%', :searchText, '%')))"
                     )
-        })
+})
 
 @Getter
 @Setter
