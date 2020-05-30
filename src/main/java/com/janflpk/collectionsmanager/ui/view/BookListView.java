@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 @Getter
 @Route(value = "books", layout = MainLayout.class)
-public class BookListView extends VerticalLayout implements HasUrlParameter<String> {
+public class BookListView extends VerticalLayout implements HasUrlParameter<String>, AfterNavigationObserver {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(BookListView.class);
 
@@ -66,8 +66,6 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
 
         configureGrid();
         configureIsbnInputPopupWindow();
-
-        updateBookList();
     }
 
     private void configureGrid() {
@@ -92,6 +90,7 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
         filterText.setAutofocus(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(event -> updateBookList());
+
     }
 
     private void configureIsbnInputPopupWindow() {
@@ -189,7 +188,7 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
     public void editBook(Book book) {
         if(book == null) {
             closeBookForm();
-            LOGGER.info("closeBookForm() was called by editBook(Book book) and book value was " + book + " / " + book.toString());
+            LOGGER.info("closeBookForm() was called by editBook(Book book) and book value was " + book);
         } else {
             getBookViewPopupWindow(book);
             LOGGER.info("getBookViewPopupWindow(book) method was called by editBook(Book book) and book value was " + book.toString());
@@ -198,6 +197,7 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
     }
 
     private void updateBookList() {
+        LOGGER.info("updateBookList() method was called...");
         bookGrid.setItems(bookDbService.findByBooksCollectionId(booksCollectionId, filterText.getValue()));
     }
 
@@ -253,6 +253,11 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
             return new Book(null, isbnNumber);
         }
         return new Book();
+    }
+
+    @Override
+    public void afterNavigation(AfterNavigationEvent event) {
+        updateBookList();
     }
 
     @Override
