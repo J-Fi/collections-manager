@@ -2,6 +2,7 @@ package com.janflpk.collectionsmanager.ui;
 
 import com.janflpk.collectionsmanager.ui.view.BooksCollectionsListView;
 import com.janflpk.collectionsmanager.ui.view.FilmsCollectionsListView;
+import com.janflpk.collectionsmanager.ui.view.HomeView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -43,12 +44,14 @@ public class MainLayout extends AppLayout implements RouterLayout {
     }
 
     private void createDrawer() {
+        RouterLink homeViewLink = new RouterLink("Strona główna", HomeView.class);
         RouterLink bookListsLink = new RouterLink("Kolekcje książek", BooksCollectionsListView.class);
         RouterLink filmListsLink = new RouterLink("Kolekcje filmów", FilmsCollectionsListView.class);
 
+        homeViewLink.setHighlightCondition(HighlightConditions.sameLocation());
         bookListsLink.setHighlightCondition(HighlightConditions.sameLocation());
         filmListsLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-        addToDrawer(new VerticalLayout(bookListsLink, filmListsLink));
+        addToDrawer(new VerticalLayout(homeViewLink, bookListsLink, filmListsLink));
     }
 }
