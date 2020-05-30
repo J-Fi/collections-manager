@@ -4,6 +4,7 @@ import com.janflpk.collectionsmanager.backend.domain.films.FilmsCollection;
 import com.janflpk.collectionsmanager.backend.service.FilmsCollectionDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
@@ -16,9 +17,11 @@ public class FilmsCollectionsListView extends VerticalLayout {
     public FilmsCollectionsListView(FilmsCollectionDbService filmsCollectionDbService) {
         this.filmsCollectionDbService = filmsCollectionDbService;
 
+        H2 filmsCollectionsGrid = new H2("Twoje kolekcje filmów");
+
         configureFilmsCollectionGrid();
         updateFilmsCollectionList();
-        add(filmsCollectionGrid);
+        add(filmsCollectionsGrid, filmsCollectionGrid);
         setSizeFull();
     }
 
