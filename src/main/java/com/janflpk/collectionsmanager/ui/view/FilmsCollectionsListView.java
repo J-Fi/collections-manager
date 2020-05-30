@@ -17,11 +17,11 @@ public class FilmsCollectionsListView extends VerticalLayout {
     public FilmsCollectionsListView(FilmsCollectionDbService filmsCollectionDbService) {
         this.filmsCollectionDbService = filmsCollectionDbService;
 
-        H2 filmsCollectionsGrid = new H2("Twoje kolekcje filmów");
+        H2 filmsCollectionsGridHeader = new H2("Twoje kolekcje filmów");
 
         configureFilmsCollectionGrid();
         updateFilmsCollectionList();
-        add(filmsCollectionsGrid, filmsCollectionGrid);
+        add(filmsCollectionsGridHeader, filmsCollectionGrid);
         setSizeFull();
     }
 
