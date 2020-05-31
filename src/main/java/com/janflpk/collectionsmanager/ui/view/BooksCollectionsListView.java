@@ -16,7 +16,7 @@ import java.util.Map;
 @Route(value = "books-collections", layout = MainLayout.class)
 public class BooksCollectionsListView extends VerticalLayout {
 
-    private Button addNewCollection = new Button("Zapisz");
+    private Button addNewCollection = new Button("Dodaj nową kolekcję");
     private Button updateCollection = new Button("Edytuj");
     private Button deleteCollection = new Button("Usuń");
 
