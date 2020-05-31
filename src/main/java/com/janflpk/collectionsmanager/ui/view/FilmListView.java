@@ -15,12 +15,13 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.AfterNavigationObserver;
-import com.vaadin.flow.router.HasUrlParameter;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Route(value = "films", layout = MainLayout.class)
@@ -211,5 +212,18 @@ public class FilmListView extends VerticalLayout implements HasUrlParameter<Stri
 
     public Film getFilmWithTitle(String filmTitle) {
         return new Film(filmTitle);
+    }
+
+    @Override
+    public void afterNavigation(AfterNavigationEvent event) {
+        updateFilmList();
+    }
+
+    @Override
+    public void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
+        Location location = event.getLocation();
+        QueryParameters queryParameters = location.getQueryParameters();
+        Map<String, List<String>> parameterMap = queryParameters.getParameters();
+        filmsCollectionId = Long.valueOf(parameterMap.get("filmsCollectionId").get(0));
     }
 }
