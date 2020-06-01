@@ -1,6 +1,7 @@
 package com.janflpk.collectionsmanager.ui.view;
 
 import com.janflpk.collectionsmanager.backend.domain.books.BooksCollection;
+import com.janflpk.collectionsmanager.backend.service.BookDbService;
 import com.janflpk.collectionsmanager.backend.service.BooksCollectionDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
 import com.vaadin.flow.component.button.Button;
@@ -22,10 +23,13 @@ public class BooksCollectionsListView extends VerticalLayout {
 
     private BooksCollectionDbService booksCollectionDbService;
 
+    private BookDbService bookDbService;
+
     Grid<BooksCollection> booksCollectionGrid;
 
-    public BooksCollectionsListView(BooksCollectionDbService booksCollectionDbService) {
+    public BooksCollectionsListView(BooksCollectionDbService booksCollectionDbService, BookDbService bookDbService) {
         this.booksCollectionDbService = booksCollectionDbService;
+        this.bookDbService = bookDbService;
 
         H2 collectionsGridHeader = new H2("Twoje kolekcje książek");
 
@@ -41,7 +45,7 @@ public class BooksCollectionsListView extends VerticalLayout {
         booksCollectionGrid.addColumn(BooksCollection::getCollectionName)
                 .setHeader("Nazwa kolekcji")
                 .setSortable(true);
-        booksCollectionGrid.addColumn(e -> e.getBooks().size())
+        booksCollectionGrid.addColumn(e -> bookDbService.countBooksByBooksCollection_BooksCollectionId(e.getBooksCollectionId()))
                 .setHeader("Liczba woluminów")
                 .setSortable(true);
 

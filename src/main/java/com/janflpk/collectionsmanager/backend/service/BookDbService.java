@@ -16,9 +16,9 @@ public class BookDbService {
     @Autowired
     private BooksCollectionDbService booksCollectionDbService;
 
-/*    public List<Book> findAll() {
+    public List<Book> findAll() {
         return bookRepo.findAll();
-    }*/
+    }
 
     public List<Book> findAll(String searchText) {
         return bookRepo.findAll(searchText);
@@ -31,6 +31,10 @@ public class BookDbService {
 
     public void deleteBook(final Long id) {
         bookRepo.deleteById(id);
+    }
+
+    public Long countBooksByBooksCollection_BooksCollectionId(final Long id) {
+        return bookRepo.countBooksByBooksCollection_BooksCollectionId(id);
     }
 
     public List<Book> findByBooksCollectionId(Long booksCollectionId, String searchText) {

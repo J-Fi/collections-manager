@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.collection.internal.PersistentList;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -45,7 +46,7 @@ public class BooksCollection {
             targetEntity = Book.class,
             mappedBy = "booksCollection",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     private List<Book> books = new ArrayList<>();
 
