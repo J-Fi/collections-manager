@@ -7,6 +7,8 @@ import com.janflpk.collectionsmanager.backend.repository.BooksCollectionReposito
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,6 +20,8 @@ import java.util.Optional;
 @SpringBootTest
 public class BookRepositoryTest {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookRepositoryTest.class);
+
     @Autowired
     private BookRepository bookRepository;
 
@@ -27,16 +31,22 @@ public class BookRepositoryTest {
     @Test
     public void shouldSaveAndDeleteBook() {
         //Given
-        BooksCollection booksCollection = new BooksCollection(3L, "MyBooks");
+        BooksCollection booksCollection = new BooksCollection("MyBooksTEST");
         Book book1 = new Book("1234567890", "1234567890123","title1",
                 "publisher1", "synopsys1", "image1",
-                "authors1", "subjects1", 2001, booksCollection);
+                "authors1", "subjects1", 2001);
 
         //When
+        booksCollection.getBooks().add(book1);
+
+        book1.setBooksCollection(booksCollection);
+
+        booksCollectionRepository.save(booksCollection);
+
         bookRepository.save(book1);
         Long book1ID = book1.getBookId();
         bookRepository.deleteById(book1ID);
-
+        LOGGER.info("book1ID = " + book1ID + ", bookRepository.findById(book1ID) " + bookRepository.findById(book1ID));
         Optional<Book> deletedBook = bookRepository.findById(book1ID);
 
         //Then
@@ -44,13 +54,14 @@ public class BookRepositoryTest {
         Assert.assertNotNull(book1ID);
         Assert.assertEquals(Optional.empty(), deletedBook);
         //Clean-up
-        //no need to delete book1 from the database as the test covers saving and deleting
+        LOGGER.info("booksCollection.getBooksCollectionId() = " + booksCollection.getBooksCollectionId());
+        booksCollectionRepository.deleteById(booksCollection.getBooksCollectionId());
     }
 
     @Test
     public void shouldFetchBooksByBooksCollectionIdTest() {
         //Given
-        BooksCollection bc1 = new BooksCollection("MyBooks1");
+        BooksCollection bc1 = new BooksCollection("MyBooks1TEST");
 
         Book book1 = new Book("1234567890", "1234567890123","title1",
                 "publisher1", "synopsys1", "image1",
@@ -69,7 +80,7 @@ public class BookRepositoryTest {
         booksCollectionRepository.save(bc1);
 
         //When
-        List<Book> booksListReturned = bookRepository.findByBooksCollectionId(bc1.getBooksCollectionId(), "text");
+        List<Book> booksListReturned = bookRepository.findByBooksCollectionId(bc1.getBooksCollectionId(), "titl");
 
         //Then
         Assert.assertNotNull(booksListReturned);
@@ -77,5 +88,7 @@ public class BookRepositoryTest {
 
         //Clean up
         booksCollectionRepository.deleteById(bc1.getBooksCollectionId());
+        bookRepository.delete(book1);
+        bookRepository.delete(book2);
     }
 }

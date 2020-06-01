@@ -208,6 +208,7 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
     }
 
     private void deleteBook(BookForm.DeleteBookEvent event) {
+        LOGGER.info("deleteBook() called, event.getBook().getBookId() = " + event.getBook().getBookId());
         bookDbService.deleteBook(event.getBook().getBookId());
         updateBookList();
         closeBookForm();
