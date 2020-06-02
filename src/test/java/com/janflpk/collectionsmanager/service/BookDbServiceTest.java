@@ -116,4 +116,29 @@ public class BookDbServiceTest {
         //Then
         Assert.assertEquals(2, booksListReturned.size());
     }
+
+    @Test
+    public void shouldFetchAllBooksTest() {
+        //Given
+        BooksCollection bc1 = new BooksCollection(1L, "MyBooks1");
+        Book book1 = new Book(1L, "1234567890", "1234567890123","title1",
+                "publisher1", "synopsys1", "image1",
+                "authors1", "subjects1", 2001, bc1);
+        Book book2 = new Book(2L, "1111111111", "2222222222222","title2",
+                "publisher2", "synopsys2", "image2",
+                "authors2", "subjects2", 2002, bc1);
+
+        List<Book> booksList = new ArrayList<>();
+        booksList.add(book1);
+        booksList.add(book2);
+
+        when(bookRepository.findAll()).thenReturn(booksList);
+
+        //When
+        List<Book> bookListReturned = bookDbService.findAll();
+
+        //Then
+        Assert.assertNotNull(bookListReturned);
+        Assert.assertEquals(2, bookListReturned.size());
+    }
 }
