@@ -1,6 +1,7 @@
 package com.janflpk.collectionsmanager.ui.view;
 
 import com.janflpk.collectionsmanager.backend.domain.films.FilmsCollection;
+import com.janflpk.collectionsmanager.backend.service.FilmDbService;
 import com.janflpk.collectionsmanager.backend.service.FilmsCollectionDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
 import com.vaadin.flow.component.button.Button;
@@ -22,10 +23,14 @@ public class FilmsCollectionsListView extends VerticalLayout {
 
 
     private FilmsCollectionDbService filmsCollectionDbService;
+
+    private FilmDbService filmDbService;
+
     private Grid<FilmsCollection> filmsCollectionGrid;
 
-    public FilmsCollectionsListView(FilmsCollectionDbService filmsCollectionDbService) {
+    public FilmsCollectionsListView(FilmsCollectionDbService filmsCollectionDbService, FilmDbService filmDbService) {
         this.filmsCollectionDbService = filmsCollectionDbService;
+        this.filmDbService = filmDbService;
 
         H2 filmsCollectionsGridHeader = new H2("Twoje kolekcje filmów");
 
@@ -41,7 +46,7 @@ public class FilmsCollectionsListView extends VerticalLayout {
         filmsCollectionGrid.addColumn(FilmsCollection::getCollectionName)
                 .setHeader("Nazwa kolekcji")
                 .setSortable(true);
-        filmsCollectionGrid.addColumn(e -> e.getFilms().size())
+        filmsCollectionGrid.addColumn(e -> filmDbService.countFilmsByFilmsCollection_FilmsCollectionId(e.getFilmsCollectionId()))
                 .setHeader("Liczba filmów")
                 .setSortable(true);
 

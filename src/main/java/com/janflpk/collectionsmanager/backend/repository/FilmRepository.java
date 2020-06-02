@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,4 +26,6 @@ public interface FilmRepository extends CrudRepository<Film, Long> {
 
     @Query
     List<Film> findByFilmsCollectionId(@Param("filmsCollectionId") Long filmsCollectionId, @Param("searchText") String searchText);
+
+    Long countFilmsByFilmsCollection_FilmsCollectionId(@NotNull Long filmsCollection_filmsCollectionId);
 }

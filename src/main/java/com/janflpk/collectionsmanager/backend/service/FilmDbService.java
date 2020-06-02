@@ -69,4 +69,8 @@ public class FilmDbService {
         filmToUpdate.setProduction(film.getProduction());
         return filmRepo.save(filmToUpdate);
     }
+
+    public Long countFilmsByFilmsCollection_FilmsCollectionId(final Long id) {
+        return filmRepo.countFilmsByFilmsCollection_FilmsCollectionId(id);
+    }
 }
