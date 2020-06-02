@@ -36,7 +36,7 @@ public class  FilmsCollection {
             targetEntity = Film.class,
             mappedBy = "filmsCollection",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     private List<Film> films = new ArrayList<>();
 
