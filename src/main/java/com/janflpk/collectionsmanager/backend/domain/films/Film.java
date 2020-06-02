@@ -68,7 +68,7 @@ public class Film {
     @Column(name = "Production")
     private String production;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "films_collection_id")
     private FilmsCollection filmsCollection;
 
