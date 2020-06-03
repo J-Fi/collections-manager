@@ -13,6 +13,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
@@ -41,6 +42,9 @@ public class BooksCollectionsListView extends VerticalLayout {
 
         configureBooksCollectionGrid();
         updateBooksCollectionsList();
+        addNewCollection.addClickListener(e -> {
+            createNewCollection();
+        });
         add(collectionsGridHeader, addNewCollection, booksCollectionGrid);
         setSizeFull();
     }
@@ -82,6 +86,29 @@ public class BooksCollectionsListView extends VerticalLayout {
             dialog.close();
             updateBooksCollectionsList();
         });
+        cancelButton.addClickListener(e -> dialog.close());
+
+        dialog.add(dialogLayout);
+        dialog.open();
+    }
+
+    public void createNewCollection() {
+        Dialog dialog = new Dialog();
+        TextField collectionNameInput = new TextField();
+        collectionNameInput.setPlaceholder("Podaj nazwę kolekcji...");
+
+        Button saveButton = new Button("Zapisz");
+        Button cancelButton = new Button("Anuluj");
+        HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, cancelButton);
+
+        VerticalLayout dialogLayout = new VerticalLayout(collectionNameInput, buttonLayout);
+
+        saveButton.addClickListener(e -> {
+            booksCollectionDbService.saveBooksCollection(new BooksCollection(collectionNameInput.getValue()));
+            dialog.close();
+            updateBooksCollectionsList();
+        });
+
         cancelButton.addClickListener(e -> dialog.close());
 
         dialog.add(dialogLayout);
