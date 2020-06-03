@@ -8,6 +8,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
 
@@ -48,6 +49,11 @@ public class BooksCollectionsListView extends VerticalLayout {
         booksCollectionGrid.addColumn(e -> bookDbService.countBooksByBooksCollection_BooksCollectionId(e.getBooksCollectionId()).orElse(0L))
                 .setHeader("Liczba woluminów")
                 .setSortable(true);
+        booksCollectionGrid.addColumn(new NativeButtonRenderer<BooksCollection>("Usuń kolekcję",
+                clickedItem -> {
+                    booksCollectionDbService.deleteBooksCollection(clickedItem.getBooksCollectionId());
+                    updateBooksCollectionsList();
+                }));
 
         booksCollectionGrid.asSingleSelect().addValueChangeListener(e -> {
             Map<String, String> parameters = new HashMap<>();
