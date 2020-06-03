@@ -49,7 +49,7 @@ public class BooksCollectionsListView extends VerticalLayout {
         booksCollectionGrid.addColumn(e -> bookDbService.countBooksByBooksCollection_BooksCollectionId(e.getBooksCollectionId()).orElse(0L))
                 .setHeader("Liczba woluminów")
                 .setSortable(true);
-        booksCollectionGrid.addColumn(new NativeButtonRenderer<BooksCollection>("Usuń kolekcję",
+        booksCollectionGrid.addColumn(new NativeButtonRenderer<>("Usuń kolekcję",
                 clickedItem -> {
                     booksCollectionDbService.deleteBooksCollection(clickedItem.getBooksCollectionId());
                     updateBooksCollectionsList();
