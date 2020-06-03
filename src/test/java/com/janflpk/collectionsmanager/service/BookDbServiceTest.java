@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -140,5 +141,30 @@ public class BookDbServiceTest {
         //Then
         Assert.assertNotNull(bookListReturned);
         Assert.assertEquals(2, bookListReturned.size());
+    }
+
+    @Test
+    public void shouldFetchNumberOfBooksInCollectionTest() {
+        //Given
+        BooksCollection bc1 = new BooksCollection(1L, "MyBooks1");
+        Book book1 = new Book(1L, "1234567890", "1234567890123","title1",
+                "publisher1", "synopsys1", "image1",
+                "authors1", "subjects1", 2001, bc1);
+        Book book2 = new Book(2L, "1111111111", "2222222222222","title2",
+                "publisher2", "synopsys2", "image2",
+                "authors2", "subjects2", 2002, bc1);
+
+        List<Book> booksList = new ArrayList<>();
+        booksList.add(book1);
+        booksList.add(book2);
+
+        when(bookRepository.countBooksByBooksCollection_BooksCollectionId(1L)).thenReturn(Optional.of(2L));
+
+        //When
+        Optional<Long> numberOfItemsReturned = bookDbService.countBooksByBooksCollection_BooksCollectionId(1L);
+
+        //Then
+        Assert.assertNotNull(numberOfItemsReturned);
+        Assert.assertEquals(Long.valueOf(2L), numberOfItemsReturned.orElse(0L));
     }
 }

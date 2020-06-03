@@ -70,7 +70,7 @@ public class FilmDbService {
         return filmRepo.save(filmToUpdate);
     }
 
-    public Long countFilmsByFilmsCollection_FilmsCollectionId(final Long id) {
+    public Optional<Long> countFilmsByFilmsCollection_FilmsCollectionId(final Long id) {
         return filmRepo.countFilmsByFilmsCollection_FilmsCollectionId(id);
     }
 }

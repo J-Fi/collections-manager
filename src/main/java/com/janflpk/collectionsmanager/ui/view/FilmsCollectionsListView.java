@@ -46,7 +46,7 @@ public class FilmsCollectionsListView extends VerticalLayout {
         filmsCollectionGrid.addColumn(FilmsCollection::getCollectionName)
                 .setHeader("Nazwa kolekcji")
                 .setSortable(true);
-        filmsCollectionGrid.addColumn(e -> filmDbService.countFilmsByFilmsCollection_FilmsCollectionId(e.getFilmsCollectionId()))
+        filmsCollectionGrid.addColumn(e -> filmDbService.countFilmsByFilmsCollection_FilmsCollectionId(e.getFilmsCollectionId()).orElse(0L))
                 .setHeader("Liczba filmów")
                 .setSortable(true);
 

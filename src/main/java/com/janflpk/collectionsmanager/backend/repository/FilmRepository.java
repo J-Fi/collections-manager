@@ -27,5 +27,5 @@ public interface FilmRepository extends CrudRepository<Film, Long> {
     @Query
     List<Film> findByFilmsCollectionId(@Param("filmsCollectionId") Long filmsCollectionId, @Param("searchText") String searchText);
 
-    Long countFilmsByFilmsCollection_FilmsCollectionId(@NotNull Long filmsCollection_filmsCollectionId);
+    Optional<Long> countFilmsByFilmsCollection_FilmsCollectionId(@NotNull Long filmsCollection_filmsCollectionId);
 }

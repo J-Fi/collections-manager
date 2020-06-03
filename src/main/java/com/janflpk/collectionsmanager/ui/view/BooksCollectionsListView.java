@@ -45,7 +45,7 @@ public class BooksCollectionsListView extends VerticalLayout {
         booksCollectionGrid.addColumn(BooksCollection::getCollectionName)
                 .setHeader("Nazwa kolekcji")
                 .setSortable(true);
-        booksCollectionGrid.addColumn(e -> bookDbService.countBooksByBooksCollection_BooksCollectionId(e.getBooksCollectionId()))
+        booksCollectionGrid.addColumn(e -> bookDbService.countBooksByBooksCollection_BooksCollectionId(e.getBooksCollectionId()).orElse(0L))
                 .setHeader("Liczba woluminów")
                 .setSortable(true);
 

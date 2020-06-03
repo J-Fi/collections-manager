@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Repository
@@ -17,7 +18,7 @@ public interface  BookRepository extends CrudRepository<Book, Long> {
     @Override
     List<Book> findAll();
 
-    Long countBooksByBooksCollection_BooksCollectionId(@NotNull Long booksCollection_booksCollectionId);
+    Optional<Long> countBooksByBooksCollection_BooksCollectionId(@NotNull Long booksCollection_booksCollectionId);
 
     @Query
     List<Book> findAll(@Param("searchText") String searchText);

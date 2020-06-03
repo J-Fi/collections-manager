@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookDbService {
@@ -33,8 +34,8 @@ public class BookDbService {
         bookRepo.deleteById(id);
     }
 
-    public Long countBooksByBooksCollection_BooksCollectionId(final Long id) {
-        return bookRepo.countBooksByBooksCollection_BooksCollectionId(id);
+    public Optional<Long> countBooksByBooksCollection_BooksCollectionId(final Long id) {
+        return Optional.ofNullable(bookRepo.countBooksByBooksCollection_BooksCollectionId(id)).orElse(Optional.ofNullable(Long.valueOf(0L)));
     }
 
     public List<Book> findByBooksCollectionId(Long booksCollectionId, String searchText) {
