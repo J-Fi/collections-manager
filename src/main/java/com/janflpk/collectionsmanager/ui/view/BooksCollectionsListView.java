@@ -60,6 +60,8 @@ public class BooksCollectionsListView extends VerticalLayout {
                 .setSortable(true);
         booksCollectionGrid.addColumn(new NativeButtonRenderer<>("Usuń kolekcję",
                 clickedItem -> confirmDeletingCollection(clickedItem.getBooksCollectionId(), clickedItem.getCollectionName())));
+        booksCollectionGrid.addColumn(new NativeButtonRenderer<>("Zmień nazwę",
+                this::changeCollectionName));
 
         booksCollectionGrid.asSingleSelect().addValueChangeListener(e -> {
             Map<String, String> parameters = new HashMap<>();
@@ -105,6 +107,30 @@ public class BooksCollectionsListView extends VerticalLayout {
 
         saveButton.addClickListener(e -> {
             booksCollectionDbService.saveBooksCollection(new BooksCollection(collectionNameInput.getValue()));
+            dialog.close();
+            updateBooksCollectionsList();
+        });
+
+        cancelButton.addClickListener(e -> dialog.close());
+
+        dialog.add(dialogLayout);
+        dialog.open();
+    }
+
+    private void changeCollectionName(BooksCollection booksCollection) {
+        Dialog dialog = new Dialog();
+        TextField collectionRenameInput = new TextField();
+        collectionRenameInput.setPlaceholder("Podaj nową nazwę kolekcji...");
+
+        Button saveButton = new Button("Zapisz");
+        Button cancelButton = new Button("Anuluj");
+        HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, cancelButton);
+
+        VerticalLayout dialogLayout = new VerticalLayout(collectionRenameInput, buttonLayout);
+
+        saveButton.addClickListener(e -> {
+            booksCollection.setCollectionName(collectionRenameInput.getValue());
+            booksCollectionDbService.updateBooksCollection(booksCollection);
             dialog.close();
             updateBooksCollectionsList();
         });

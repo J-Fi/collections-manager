@@ -29,6 +29,10 @@ public class BooksCollectionDbService {
         return booksCollectionRepo.findAll();
     }
 
+    public void updateBooksCollection(BooksCollection booksCollection) {
+        booksCollectionRepo.save(booksCollection);
+    }
+
 /*    public List<BooksCollection> findBooksCollectionsByUserId(final Long userId) {
         return Optional.ofNullable(booksCollectionRepo.getBooksCollectionsByUserId(userId)).orElse(new ArrayList<>());
     }*/
