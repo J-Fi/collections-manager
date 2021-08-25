@@ -1,3 +1,4 @@
+/*
 package com.janflpk.collectionsmanager.repository;
 
 import com.janflpk.collectionsmanager.backend.domain.films.Film;
@@ -48,3 +49,4 @@ public class FilmRepositoryTest {
         //no need to delete book1 from the database as the test covers saving and deleting
     }
 }
+*/
