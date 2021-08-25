@@ -11,8 +11,8 @@
     <groupId>com.janflpk</groupId>
     <artifactId>collections-manager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>books-manager</name>
-    <description>Personal books manager application</description>
+    <name>collections-manager</name>
+    <description>Personal collections manager application</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -55,10 +55,15 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.4.0.Final</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.13</version>
+        </dependency>-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.23</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
