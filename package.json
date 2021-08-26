@@ -6,6 +6,9 @@
     "@webcomponents/webcomponentsjs": "^2.2.10",
     "@vaadin/flow-deps": "./target/frontend"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "devDependencies": {
     "webpack": "4.42.0",
     "webpack-cli": "3.3.10",
