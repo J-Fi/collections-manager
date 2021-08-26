@@ -63,6 +63,8 @@ public class FilmsCollectionsListView extends VerticalLayout {
         });
     }
 
+    //tutaj trzeba uzupełnić kod
+
     private void updateFilmsCollectionList() {
         filmsCollectionGrid.setItems(filmsCollectionDbService.findAll());
     }
