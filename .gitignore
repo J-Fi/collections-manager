@@ -184,8 +184,10 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-package.json/
+package.json
 package-lock.json
+webpack.config.js
+webpack.generated.js
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
