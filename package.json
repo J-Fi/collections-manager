@@ -4,7 +4,7 @@
   "dependencies": {
     "@polymer/polymer": "3.2.0",
     "@webcomponents/webcomponentsjs": "^2.2.10",
-    "@vaadin/flow-deps": "1.0.0"
+    "@vaadin/flow-deps": "./target/frontend"
   },
   "engines": {
     "node": "14.x"
