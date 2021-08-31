@@ -140,18 +140,18 @@
                     <nodeVersion>v14.17.5</nodeVersion>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>com.heroku.sdk</groupId>
                 <artifactId>heroku-maven-plugin</artifactId>
                 <version>3.0.4</version>
                 <configuration>
-                    <!--suppress UnresolvedMavenProperty -->
+                    &lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;
                     <appName>${heroku.appName}</appName>
                     <processTypes>
                         <web>java -jar target/collections-manager-0.0.1-SNAPSHOT.jar server.port=$PORT</web>
                     </processTypes>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
     <profiles>
