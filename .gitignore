@@ -142,6 +142,7 @@ buildNumber.properties
 .classpath
 
 ### Node ###
+node/
 # Logs
 logs
 npm-debug.log*
