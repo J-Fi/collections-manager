@@ -148,7 +148,7 @@
                     <!--suppress UnresolvedMavenProperty -->
                     <appName>${heroku.appName}</appName>
                     <processTypes>
-                        <web>java -jar target/collections-manager-0.0.1-SNAPSHOT.jar</web>
+                        <web>java -jar target/collections-manager-0.0.1-SNAPSHOT.jar server.port=$PORT</web>
                     </processTypes>
                 </configuration>
             </plugin>
