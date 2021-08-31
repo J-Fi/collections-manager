@@ -145,7 +145,7 @@
                     <npmVersion>7.21.1</npmVersion>
                 </configuration>
             </plugin>
-<!--            <plugin>
+            <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.version}</version>
@@ -156,7 +156,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
 
             <!--<plugin>
                 <groupId>com.heroku.sdk</groupId>
@@ -172,9 +172,9 @@
             </plugin>-->
         </plugins>
     </build>
-<!--    <profiles>
+    <profiles>
     <profile>
-        &lt;!&ndash; Production mode is activated using -Pproduction &ndash;&gt;
+        <!-- Production mode is activated using -Pproduction -->
         <id>production</id>
         <build>
             <plugins>
@@ -197,5 +197,5 @@
             </plugins>
         </build>
     </profile>
-    </profiles>-->
+    </profiles>
 </project>
