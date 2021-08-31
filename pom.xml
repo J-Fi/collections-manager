@@ -172,9 +172,9 @@
             </plugin>-->
         </plugins>
     </build>
-    <profiles>
+<!--    <profiles>
     <profile>
-        <!-- Production mode is activated using -Pproduction -->
+        &lt;!&ndash; Production mode is activated using -Pproduction &ndash;&gt;
         <id>production</id>
         <build>
             <plugins>
@@ -197,5 +197,5 @@
             </plugins>
         </build>
     </profile>
-    </profiles>
+    </profiles>-->
 </project>
