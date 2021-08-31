@@ -145,7 +145,7 @@
                     <npmVersion>7.21.1</npmVersion>
                 </configuration>
             </plugin>
-            <plugin>
+<!--            <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.version}</version>
@@ -156,7 +156,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
             <!--<plugin>
                 <groupId>com.heroku.sdk</groupId>
