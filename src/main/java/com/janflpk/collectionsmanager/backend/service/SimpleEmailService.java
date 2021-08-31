@@ -1,3 +1,4 @@
+/*
 package com.janflpk.collectionsmanager.backend.service;
 
 import com.janflpk.collectionsmanager.backend.domain.mail.Mail;
@@ -41,3 +42,4 @@ public class SimpleEmailService {
         };
     }
 }
+*/

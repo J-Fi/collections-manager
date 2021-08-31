@@ -1,3 +1,4 @@
+/*
 package com.janflpk.collectionsmanager.backend.scheduler;
 
 import com.janflpk.collectionsmanager.backend.domain.mail.Mail;
@@ -25,3 +26,4 @@ public class EmailScheduler {
         ));
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.janflpk.collectionsmanager.backend.domain.mail;
 
 import lombok.AllArgsConstructor;
@@ -11,3 +12,4 @@ public class Mail {
     private String subject;
     private String message;
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.janflpk.collectionsmanager.backend.service;
 
 //import com.crud.tasks.config.AdminConfig;
@@ -18,14 +19,18 @@ public class MailCreatorService {
 
     public static final String GOODBYE_MESSAGE = "Thank you for using our website!";
 
+*/
 /*    @Autowired
     private CompanyConfig companyConfig;
 
     @Autowired
-    private AdminConfig adminConfig;*/
+    private AdminConfig adminConfig;*//*
 
+
+*/
 /*    @Autowired
-    private MailGeneratorType mailGeneratorType;*/
+    private MailGeneratorType mailGeneratorType;*//*
+
 
     @Autowired
     @Qualifier("templateEngine")
@@ -75,3 +80,4 @@ public class MailCreatorService {
         return context;
     }
 }
+*/
