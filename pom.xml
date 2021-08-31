@@ -122,10 +122,10 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.5.4</version>
-                <configuration>
+<!--                <configuration>
                     <wait>500</wait>
                     <maxAttempts>240</maxAttempts>
-                </configuration>
+                </configuration>-->
             </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
