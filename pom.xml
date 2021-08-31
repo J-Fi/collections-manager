@@ -121,6 +121,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.5.4</version>
             </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -137,6 +138,18 @@
                 </executions>
                 <configuration>
                     <nodeVersion>v10.16.2</nodeVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>3.0.4</version>
+                <configuration>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <appName>${heroku.appName}</appName>
+                    <processTypes>
+                        <web>java -jar target/collections-manager-0.0.1-SNAPSHOT.jar</web>
+                    </processTypes>
                 </configuration>
             </plugin>
         </plugins>
