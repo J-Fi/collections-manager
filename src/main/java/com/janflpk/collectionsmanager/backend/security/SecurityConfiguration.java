@@ -57,6 +57,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/images/**",
                 "/styles/**",
                 "/h2-console/**");
-        )
     }
 }
