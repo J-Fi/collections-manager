@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public UserDetailsService userDetailsService() {
         UserDetails user = User.withUsername("user")
-                .password("(noop}password")
+                .password("{noop}password")
                 .roles("USER")
                 .build();
         return new InMemoryUserDetailsManager(user);
