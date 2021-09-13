@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 @Route("registration")
 @PageTitle("Collections Manager | Registration")
 @Getter
-public class RegisterView extends FormLayout {
+public class RegisterForm extends FormLayout {
 
     private H3 title;
 
@@ -32,7 +32,7 @@ public class RegisterView extends FormLayout {
 
     private Button submitButton;
 
-    public RegisterView() {
+    public RegisterForm() {
         title = new H3("Rejestracja");
         firstName = new TextField("Imię");
         lastName = new TextField("Nazwisko");
