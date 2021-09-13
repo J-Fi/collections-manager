@@ -9,14 +9,10 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 import lombok.Getter;
 
 import java.util.stream.Stream;
 
-@Route("registration")
-@PageTitle("Collections Manager | Registration")
 @Getter
 public class RegisterForm extends FormLayout {
 
