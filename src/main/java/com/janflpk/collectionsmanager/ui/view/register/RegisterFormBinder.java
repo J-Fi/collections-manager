@@ -4,6 +4,7 @@ import com.janflpk.collectionsmanager.backend.domain.user.User;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
+import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.data.binder.ValueContext;
 
@@ -23,11 +24,28 @@ public class RegisterFormBinder {
 
         binder.forField(registerForm.getPassword())
                 .withValidator(this::passwordValidator).bind("password");
+
+        registerForm.getPasswordConfirm().addValueChangeListener(e -> {
+            enablePasswordValidation = true;
+            binder.validate();
+        });
+
+        binder.setStatusLabel(registerForm.getErrorMessageField());
+
+        registerForm.getSubmitButton().addClickListener(event -> {
+            try {
+                User userBean = new User();
+                binder.writeBean(userBean);
+                showSuccess(userBean);
+            } catch (ValidationException exception) {
+
+            }
+        });
     }
 
     private ValidationResult passwordValidator (String pass1, ValueContext ctx) {
 
-        if (pass1 == null || pass1.length() <8) {
+        if (pass1 == null || pass1.length() < 8) {
             return ValidationResult.error("Hasło musi mieć co najmniej 8 znaków długości.");
         }
 
