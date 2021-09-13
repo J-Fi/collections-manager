@@ -1,14 +1,19 @@
 package com.janflpk.collectionsmanager.ui.view.register;
 
 import com.janflpk.collectionsmanager.backend.domain.user.User;
+import com.janflpk.collectionsmanager.backend.service.UserDbService;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.data.binder.ValueContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class RegisterFormBinder {
+
+    @Autowired
+    private UserDbService userDbService;
 
     private RegisterForm registerForm;
 
@@ -36,6 +41,7 @@ public class RegisterFormBinder {
             try {
                 User userBean = new User();
                 binder.writeBean(userBean);
+                userDbService.saveUser(userBean);
                 showSuccess(userBean);
             } catch (ValidationException exception) {
 
