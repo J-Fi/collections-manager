@@ -6,7 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @NamedQuery(
         name = "User.getUserByEmail",
@@ -27,15 +30,19 @@ public class User {
     @Column(name = "user_id", unique = true)
     private Long userId;
 
+    @NotBlank
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank
     @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "birthday_date")
     private String birthday;
 
+    @NotBlank
+    @Email
     @NotNull
     @Column(name = "email", unique = true)
     private String email;
@@ -43,8 +50,10 @@ public class User {
     @Column(name = "login")
     private String login;
 
+    @NotBlank
     @NotNull
     @Column(name = "password")
+    @Size(min = 5, max = 20, message = "Hasło musi mieć długość min. 5 a max. 20 znaków!")
     private String password;
 
     public User(String firstName, String lastName, String birthday, String email, String login, String password) {
