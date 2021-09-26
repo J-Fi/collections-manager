@@ -56,6 +56,13 @@ public class User {
     @Size(min = 5, max = 20, message = "Hasło musi mieć długość min. 5 a max. 20 znaków!")
     private String password;
 
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
     public User(String firstName, String lastName, String birthday, String email, String login, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
