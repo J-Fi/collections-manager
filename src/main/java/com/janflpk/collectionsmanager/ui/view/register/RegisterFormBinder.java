@@ -8,19 +8,19 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.data.binder.ValueContext;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class RegisterFormBinder {
 
-    @Autowired
     private UserDbService userDbService;
 
     private RegisterForm registerForm;
 
     private boolean enablePasswordValidation;
 
-    public RegisterFormBinder(RegisterForm registerForm) {
+    public RegisterFormBinder(RegisterForm registerForm, UserDbService userDbService) {
+
         this.registerForm = registerForm;
+        this.userDbService = userDbService;
     }
 
     public void addBindingAndValidation() {
