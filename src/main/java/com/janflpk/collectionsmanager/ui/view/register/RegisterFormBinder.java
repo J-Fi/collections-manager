@@ -1,6 +1,9 @@
 package com.janflpk.collectionsmanager.ui.view.register;
 
 import com.janflpk.collectionsmanager.backend.domain.user.User;
+import com.janflpk.collectionsmanager.backend.domain.user.UserDto;
+import com.janflpk.collectionsmanager.backend.domain.user.facade.UserFacade;
+import com.janflpk.collectionsmanager.backend.mapper.UserMapper;
 import com.janflpk.collectionsmanager.backend.service.UserDbService;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
@@ -8,23 +11,24 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.data.binder.ValueContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 public class RegisterFormBinder {
 
-    private UserDbService userDbService;
-
     private RegisterForm registerForm;
+
+    private UserFacade userFacade;
 
     private boolean enablePasswordValidation;
 
-    public RegisterFormBinder(RegisterForm registerForm, UserDbService userDbService) {
-
+    public RegisterFormBinder(RegisterForm registerForm, UserFacade userFacade) {
         this.registerForm = registerForm;
-        this.userDbService = userDbService;
+        this.userFacade = userFacade;
     }
 
     public void addBindingAndValidation() {
-        BeanValidationBinder<User> binder = new BeanValidationBinder<>(User.class);
+        BeanValidationBinder<UserDto> binder = new BeanValidationBinder<>(UserDto.class);
         binder.bindInstanceFields(registerForm);
 
         binder.forField(registerForm.getPassword())
@@ -39,9 +43,9 @@ public class RegisterFormBinder {
 
         registerForm.getSubmitButton().addClickListener(event -> {
             try {
-                User userBean = new User();
+                UserDto userBean = new UserDto();
                 binder.writeBean(userBean);
-                userDbService.saveUser(userBean);
+                userFacade.saveUser(userBean);
                 showSuccess(userBean);
             } catch (ValidationException exception) {
 
@@ -69,7 +73,7 @@ public class RegisterFormBinder {
         return ValidationResult.error("Hasło nie zgadza się.");
     }
 
-    private void showSuccess(User userBean) {
+    private void showSuccess(UserDto userBean) {
         Notification notification = Notification.show("Twoje dane zostały zapisane. Witaj, " + userBean.getFirstName());
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }

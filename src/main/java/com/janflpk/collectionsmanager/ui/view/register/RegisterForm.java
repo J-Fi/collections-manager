@@ -10,9 +10,11 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Stream;
 
+@Component
 @Getter
 public class RegisterForm extends FormLayout {
 
