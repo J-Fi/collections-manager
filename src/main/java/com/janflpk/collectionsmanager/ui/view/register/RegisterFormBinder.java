@@ -1,18 +1,13 @@
 package com.janflpk.collectionsmanager.ui.view.register;
 
-import com.janflpk.collectionsmanager.backend.domain.user.User;
 import com.janflpk.collectionsmanager.backend.domain.user.UserDto;
 import com.janflpk.collectionsmanager.backend.domain.user.facade.UserFacade;
-import com.janflpk.collectionsmanager.backend.mapper.UserMapper;
-import com.janflpk.collectionsmanager.backend.service.UserDbService;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.data.binder.ValueContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 public class RegisterFormBinder {
 
