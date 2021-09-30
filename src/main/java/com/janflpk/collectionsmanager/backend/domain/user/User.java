@@ -53,7 +53,7 @@ public class User {
     @NotBlank
     @NotNull
     @Column(name = "password")
-    @Size(min = 5, max = 20, message = "Hasło musi mieć długość min. 5 a max. 20 znaków!")
+    //@Size(min = 5, max = 20, message = "Hasło musi mieć długość min. 5 a max. 20 znaków!")
     private String password;
 
     public User(String firstName, String lastName, String email, String password) {
