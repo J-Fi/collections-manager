@@ -1,5 +1,6 @@
 package com.janflpk.collectionsmanager.backend.domain.user;
 
+import com.janflpk.collectionsmanager.backend.domain.books.BooksCollection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @NamedQuery(
         name = "User.getUserByEmail",
@@ -56,6 +59,15 @@ public class User {
     //@Size(min = 5, max = 20, message = "Hasło musi mieć długość min. 5 a max. 20 znaków!")
     private String password;
 
+    @OneToMany(
+            targetEntity = BooksCollection.class,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<BooksCollection> booksCollections = new ArrayList<>();
+
+
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -64,6 +76,16 @@ public class User {
     }
 
     public User(String firstName, String lastName, String birthday, String email, String login, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(Long userId, String firstName, String lastName, String birthday, String email, String login, String password) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;

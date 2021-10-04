@@ -13,11 +13,11 @@ import java.util.List;
 
 @NamedQuery(
         name = "BooksCollection.getBooksCollectionsByUserId",
-        query = "FROM BooksCollection WHERE user_Id = :USERID"
+        query = "FROM BooksCollection WHERE user_Id = :userId"
 )
 @NamedQuery(
         name = "BooksCollection.getNumberOfBooks",
-        query = "FROM BooksCollection WHERE books_collection_id = :BOOKSCOLLECTIONID"
+        query = "FROM BooksCollection WHERE books_collection_id = :booksCollectionId"
 )
 
 @Getter
@@ -37,7 +37,8 @@ public class BooksCollection {
     @Column(name = "collection_name")
     private String collectionName;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    //@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
