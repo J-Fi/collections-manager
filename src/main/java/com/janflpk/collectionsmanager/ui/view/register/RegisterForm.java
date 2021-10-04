@@ -4,6 +4,7 @@ import com.vaadin.flow.component.HasValueAndElement;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.EmailField;
@@ -46,7 +47,9 @@ public class RegisterForm extends FormLayout {
         submitButton = new Button("Zarejestruj się");
         submitButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        add(title, firstName, lastName, email, password, passwordConfirm, errorMessageField, submitButton);
+        Anchor login = new Anchor("/login", "Zaloguj się.");
+
+        add(title, firstName, lastName, email, password, passwordConfirm, errorMessageField, submitButton, login);
 
         setMaxWidth("500px");
 
