@@ -1,5 +1,6 @@
 package com.janflpk.collectionsmanager.ui.view.login;
 
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -22,9 +23,11 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
+        Anchor register = new Anchor("/register", "Zarejestruj się");
+
         login.setAction("login");
 
-        add(new H1("Collections manager"), login);
+        add(new H1("Collections manager"), login, register);
     }
 
     @Override
