@@ -42,7 +42,7 @@ public class BooksCollectionDbServiceTest {
         when(booksCollectionRepository.save(bc)).thenReturn(bcPersisted);
 
         //When
-        BooksCollection booksCollectionReturned = booksCollectionDbService.saveBooksCollection(bc);
+        BooksCollection booksCollectionReturned = booksCollectionDbService.saveBooksCollection(bc, user.getUserId());
 
         //Then
         Assert.assertNotNull(booksCollectionReturned);
