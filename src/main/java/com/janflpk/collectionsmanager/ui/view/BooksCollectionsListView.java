@@ -3,6 +3,7 @@ package com.janflpk.collectionsmanager.ui.view;
 import com.janflpk.collectionsmanager.backend.domain.books.BooksCollection;
 import com.janflpk.collectionsmanager.backend.service.BookDbService;
 import com.janflpk.collectionsmanager.backend.service.BooksCollectionDbService;
+import com.janflpk.collectionsmanager.backend.service.CurrentUserRetriever;
 import com.janflpk.collectionsmanager.ui.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -15,33 +16,40 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.NativeButtonRenderer;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Route(value = "books-collections", layout = MainLayout.class)
-public class BooksCollectionsListView extends VerticalLayout {
+public class BooksCollectionsListView extends VerticalLayout implements AfterNavigationObserver {
 
     private Button addNewCollection = new Button("Dodaj nową kolekcję");
     private Button updateCollection = new Button("Edytuj");
     private Button deleteCollection = new Button("Usuń");
 
+    @Autowired
     private BooksCollectionDbService booksCollectionDbService;
 
+    @Autowired
     private BookDbService bookDbService;
+
+    @Autowired
+    private CurrentUserRetriever currentUserRetriever;
+
+    private Long userId;
 
     Grid<BooksCollection> booksCollectionGrid;
 
-    public BooksCollectionsListView(BooksCollectionDbService booksCollectionDbService, BookDbService bookDbService) {
-        this.booksCollectionDbService = booksCollectionDbService;
-        this.bookDbService = bookDbService;
+    public BooksCollectionsListView() {
 
         H2 collectionsGridHeader = new H2("Twoje kolekcje książek");
 
         configureBooksCollectionGrid();
-        updateBooksCollectionsList();
         addNewCollection.addClickListener(e -> {
             createNewCollection();
         });
@@ -106,7 +114,7 @@ public class BooksCollectionsListView extends VerticalLayout {
         VerticalLayout dialogLayout = new VerticalLayout(collectionNameInput, buttonLayout);
 
         saveButton.addClickListener(e -> {
-            booksCollectionDbService.saveBooksCollection(new BooksCollection(collectionNameInput.getValue()));
+            booksCollectionDbService.saveBooksCollection(new BooksCollection(collectionNameInput.getValue()), userId);
             dialog.close();
             updateBooksCollectionsList();
         });
@@ -142,6 +150,12 @@ public class BooksCollectionsListView extends VerticalLayout {
     }
 
     private void updateBooksCollectionsList() {
-        booksCollectionGrid.setItems(booksCollectionDbService.findAll());
+        booksCollectionGrid.setItems(booksCollectionDbService.findBooksCollectionsByUserId(userId));
+    }
+
+    @Override
+    public void afterNavigation(AfterNavigationEvent event) {
+        userId = currentUserRetriever.retrieveUserId();
+        updateBooksCollectionsList();
     }
 }
