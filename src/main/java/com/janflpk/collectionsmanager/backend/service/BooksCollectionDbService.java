@@ -5,15 +5,21 @@ import com.janflpk.collectionsmanager.backend.repository.BooksCollectionReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BooksCollectionDbService {
 
     @Autowired
+    private UserDbService userDbService;
+
+    @Autowired
     private BooksCollectionRepository booksCollectionRepo;
 
-    public BooksCollection saveBooksCollection (BooksCollection booksCollection) {
+    public BooksCollection saveBooksCollection (BooksCollection booksCollection, Long userId) {
+        booksCollection.setUser(userDbService.findById(userId));
         return booksCollectionRepo.save(booksCollection);
     }
 
@@ -33,8 +39,12 @@ public class BooksCollectionDbService {
         booksCollectionRepo.save(booksCollection);
     }
 
-/*    public List<BooksCollection> findBooksCollectionsByUserId(final Long userId) {
+    public List<BooksCollection> findBooksCollectionsByUserId(final Long userId) {
         return Optional.ofNullable(booksCollectionRepo.getBooksCollectionsByUserId(userId)).orElse(new ArrayList<>());
-    }*/
+    }
+
+    public Long getNumberOfBooksInCollection(final Long booksCollectionid) {
+        return booksCollectionRepo.getNumberOfBooks(booksCollectionid);
+    }
 
 }
