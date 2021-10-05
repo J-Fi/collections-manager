@@ -3,12 +3,15 @@ package com.janflpk.collectionsmanager.ui.view;
 import com.janflpk.collectionsmanager.backend.domain.books.Book;
 import com.janflpk.collectionsmanager.backend.isbndb.facade.IsbndbFacade;
 import com.janflpk.collectionsmanager.backend.service.BookDbService;
+import com.janflpk.collectionsmanager.backend.service.BooksCollectionDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -46,6 +49,7 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
     private Button search;
     private Button cancel;
 
+    private H3 bookGridHeader = new H3();
     private Grid<Book> bookGrid = new Grid<>(Book.class);
 
     @Autowired
@@ -54,7 +58,12 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
     @Autowired
     private IsbndbFacade isbndbFacade;
 
+    @Autowired
+    private BooksCollectionDbService booksCollectionDbService;
+
     public BookListView() {
+
+
 
         addClassName("book-list-view");
         setSizeFull();
@@ -63,7 +72,7 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
         HorizontalLayout content = new HorizontalLayout(bookGrid);
         content.setSizeFull();
 
-        add(getToolBar(), content);
+        add(bookGridHeader, getToolBar(), content);
 
         configureGrid();
         configureIsbnInputPopupWindow();
@@ -256,8 +265,13 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
         return new Book();
     }
 
+    public String renderCollectionName(Long collectionId) {
+        return booksCollectionDbService.findById(collectionId).getCollectionName();
+    }
+
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
+        bookGridHeader.setText("Teraz przeglądasz kolekcję: " + renderCollectionName(booksCollectionId).toUpperCase());
         updateBookList();
     }
 

@@ -4,12 +4,14 @@ import com.janflpk.collectionsmanager.backend.domain.books.Book;
 import com.janflpk.collectionsmanager.backend.domain.films.Film;
 import com.janflpk.collectionsmanager.backend.omdb.facade.OmdbFacade;
 import com.janflpk.collectionsmanager.backend.service.FilmDbService;
+import com.janflpk.collectionsmanager.backend.service.FilmsCollectionDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -49,6 +51,10 @@ public class FilmListView extends VerticalLayout implements HasUrlParameter<Stri
     @Autowired
     private OmdbFacade omdbFacade;
 
+    @Autowired
+    private FilmsCollectionDbService filmsCollectionDbService;
+
+    private H3 filmGridHeader = new H3();
     Grid<Film> filmGrid = new Grid<>(Film.class);
 
     public FilmListView() {
@@ -59,12 +65,10 @@ public class FilmListView extends VerticalLayout implements HasUrlParameter<Stri
         HorizontalLayout content = new HorizontalLayout(filmGrid);
         content.setSizeFull();
 
-        add(getToolBar(), content);
+        add(filmGridHeader, getToolBar(), content);
 
         configureFilmGrid();
         configureOmdbInputPopupWindow();
-
-        //updateFilmList();
     }
 
     private void configureFilmGrid() {
@@ -215,8 +219,13 @@ public class FilmListView extends VerticalLayout implements HasUrlParameter<Stri
         return new Film(filmTitle);
     }
 
+    public String renderCollectionName(Long collectionId) {
+        return filmsCollectionDbService.findById(collectionId).getCollectionName();
+    }
+
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
+        filmGridHeader.setText("Teraz przeglądasz kolekcję: " + renderCollectionName(filmsCollectionId).toUpperCase());
         updateFilmList();
     }
 
