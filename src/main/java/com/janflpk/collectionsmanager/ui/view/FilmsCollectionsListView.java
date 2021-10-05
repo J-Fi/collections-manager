@@ -1,6 +1,7 @@
 package com.janflpk.collectionsmanager.ui.view;
 
 import com.janflpk.collectionsmanager.backend.domain.films.FilmsCollection;
+import com.janflpk.collectionsmanager.backend.service.CurrentUserRetriever;
 import com.janflpk.collectionsmanager.backend.service.FilmDbService;
 import com.janflpk.collectionsmanager.backend.service.FilmsCollectionDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
@@ -9,34 +10,41 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.renderer.NativeButtonRenderer;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Route(value = "films-collections", layout = MainLayout.class)
-public class FilmsCollectionsListView extends VerticalLayout {
+public class FilmsCollectionsListView extends VerticalLayout implements AfterNavigationObserver {
 
     private Button addNewCollection = new Button("Dodaj nową kolekcję");
     private Button updateCollection = new Button("Edytuj");
     private Button deleteCollection = new Button("Usuń");
 
+    @Autowired
+    private CurrentUserRetriever currentUserRetriever;
 
+    @Autowired
     private FilmsCollectionDbService filmsCollectionDbService;
 
+    @Autowired
     private FilmDbService filmDbService;
+
+    private Long userId;
 
     private Grid<FilmsCollection> filmsCollectionGrid;
 
-    public FilmsCollectionsListView(FilmsCollectionDbService filmsCollectionDbService, FilmDbService filmDbService) {
-        this.filmsCollectionDbService = filmsCollectionDbService;
-        this.filmDbService = filmDbService;
+    public FilmsCollectionsListView() {
 
         H2 filmsCollectionsGridHeader = new H2("Twoje kolekcje filmów");
 
         configureFilmsCollectionGrid();
-        updateFilmsCollectionList();
+        //updateFilmsCollectionList();
         add(filmsCollectionsGridHeader, addNewCollection, filmsCollectionGrid);
         setSizeFull();
     }
@@ -53,7 +61,7 @@ public class FilmsCollectionsListView extends VerticalLayout {
         filmsCollectionGrid.addColumn(new NativeButtonRenderer<FilmsCollection>("Usuń kolekcję",
                 clickedItem -> {
                     filmsCollectionDbService.deleteFilmsCollection(clickedItem.getFilmsCollectionId());
-                    updateFilmsCollectionList();
+                    updateFilmsCollectionsList();
                 }));
 
         filmsCollectionGrid.asSingleSelect().addValueChangeListener(e -> {
@@ -65,7 +73,13 @@ public class FilmsCollectionsListView extends VerticalLayout {
 
     //tutaj trzeba uzupełnić kod
 
-    private void updateFilmsCollectionList() {
+    private void updateFilmsCollectionsList() {
         filmsCollectionGrid.setItems(filmsCollectionDbService.findFilmsCollectionsByUserId(userId));
+    }
+
+    @Override
+    public void afterNavigation(AfterNavigationEvent event) {
+        userId = currentUserRetriever.retrieveUserId();
+        updateFilmsCollectionsList();
     }
 }
