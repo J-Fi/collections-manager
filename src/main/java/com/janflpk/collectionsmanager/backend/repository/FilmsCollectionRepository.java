@@ -13,4 +13,6 @@ public interface FilmsCollectionRepository extends CrudRepository<FilmsCollectio
     List<FilmsCollection> findAll();
 
     List<FilmsCollection> getFilmsCollectionsByUserId(@Param("userId") Long userId);
+
+    Long getNumberOfFilms(@Param("filmsCollectionId") Long filmsCollectionId);
 }

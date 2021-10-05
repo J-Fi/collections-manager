@@ -1,6 +1,7 @@
 package com.janflpk.collectionsmanager.backend.domain.user;
 
 import com.janflpk.collectionsmanager.backend.domain.books.BooksCollection;
+import com.janflpk.collectionsmanager.backend.domain.films.FilmsCollection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -66,6 +67,14 @@ public class User {
             fetch = FetchType.LAZY
     )
     private List<BooksCollection> booksCollections = new ArrayList<>();
+
+    @OneToMany(
+            targetEntity = FilmsCollection.class,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<FilmsCollection> filmsCollections = new ArrayList<>();
 
 
     public User(String firstName, String lastName, String email, String password) {

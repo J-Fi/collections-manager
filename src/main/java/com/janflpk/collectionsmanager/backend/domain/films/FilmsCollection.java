@@ -11,6 +11,15 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedQuery(
+        name = "FilmsCollection.getFilmsCollectionsByUserId",
+        query = "FROM FilmsCollection WHERE user_Id = :userId"
+)
+@NamedQuery(
+        name = "FilmsCollection.getNumberOfFilms",
+        query = "FROM FilmsCollection WHERE films_collection_id = :filmsCollectionId"
+)
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,7 +37,7 @@ public class  FilmsCollection {
     @Column(name = "collection_name")
     private String collectionName;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
