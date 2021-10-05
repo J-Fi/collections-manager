@@ -19,6 +19,7 @@ import com.vaadin.flow.router.*;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -47,13 +48,13 @@ public class BookListView extends VerticalLayout implements HasUrlParameter<Stri
 
     private Grid<Book> bookGrid = new Grid<>(Book.class);
 
+    @Autowired
     private BookDbService bookDbService;
 
+    @Autowired
     private IsbndbFacade isbndbFacade;
 
-    public BookListView(BookDbService bookDbService, IsbndbFacade isbndbFacade) {
-        this.bookDbService = bookDbService;
-        this.isbndbFacade = isbndbFacade;
+    public BookListView() {
 
         addClassName("book-list-view");
         setSizeFull();

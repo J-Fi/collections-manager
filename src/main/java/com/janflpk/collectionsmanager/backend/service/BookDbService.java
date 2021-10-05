@@ -35,7 +35,7 @@ public class BookDbService {
     }
 
     public Optional<Long> countBooksByBooksCollection_BooksCollectionId(final Long id) {
-        return Optional.ofNullable(bookRepo.countBooksByBooksCollection_BooksCollectionId(id)).orElse(Optional.ofNullable(Long.valueOf(0L)));
+        return Optional.ofNullable(bookRepo.countBooksByBooksCollection_BooksCollectionId(id)).orElse(Optional.ofNullable(0L));
     }
 
     public List<Book> findByBooksCollectionId(Long booksCollectionId, String searchText) {

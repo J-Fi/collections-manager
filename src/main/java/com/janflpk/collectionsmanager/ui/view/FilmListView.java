@@ -19,6 +19,7 @@ import com.vaadin.flow.router.*;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
@@ -42,15 +43,15 @@ public class FilmListView extends VerticalLayout implements HasUrlParameter<Stri
     private Button search;
     private Button cancel;
 
+    @Autowired
     private FilmDbService filmDbService;
 
+    @Autowired
     private OmdbFacade omdbFacade;
 
     Grid<Film> filmGrid = new Grid<>(Film.class);
 
-    public FilmListView(FilmDbService filmDbService, OmdbFacade omdbFacade) {
-        this.filmDbService = filmDbService;
-        this.omdbFacade = omdbFacade;
+    public FilmListView() {
 
         addClassName("film-list-view");
         setSizeFull();
@@ -63,7 +64,7 @@ public class FilmListView extends VerticalLayout implements HasUrlParameter<Stri
         configureFilmGrid();
         configureOmdbInputPopupWindow();
 
-        updateFilmList();
+        //updateFilmList();
     }
 
     private void configureFilmGrid() {
@@ -176,7 +177,7 @@ public class FilmListView extends VerticalLayout implements HasUrlParameter<Stri
     }
 
     private void saveFilm(FilmForm.SaveFilmEvent event) {
-        filmDbService.saveFilm(event.getFilm(), 37L);
+        filmDbService.saveFilm(event.getFilm(), filmsCollectionId);
         updateFilmList();
         closeFilmForm();
     }

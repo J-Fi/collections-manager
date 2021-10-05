@@ -32,9 +32,15 @@ public class FilmDbService {
         filmRepo.deleteById(id);
     }
 
+    public Optional<Long> countFilmsByFilmsCollection_FilmsCollectionId(final Long id) {
+        return Optional.ofNullable(filmRepo.countFilmsByFilmsCollection_FilmsCollectionId(id)).orElse(Optional.ofNullable(0L));
+    }
+
     public Film findById(final Long id) {
         return filmRepo.findById(id).orElse(new Film());
     }
+
+
 
     public List<Film> fetchFilmsByFilmsCollectionId(Long filmsCollectionId) {
         List<Film> list = Optional.ofNullable(filmRepo.findAll()).orElse(new ArrayList<>());
@@ -70,7 +76,7 @@ public class FilmDbService {
         return filmRepo.save(filmToUpdate);
     }
 
-    public Optional<Long> countFilmsByFilmsCollection_FilmsCollectionId(final Long id) {
+/*    public Optional<Long> countFilmsByFilmsCollection_FilmsCollectionId(final Long id) {
         return filmRepo.countFilmsByFilmsCollection_FilmsCollectionId(id);
-    }
+    }*/
 }

@@ -41,7 +41,7 @@ public class FilmsCollectionDbServiceTest {
         when(filmsCollectionRepository.save(fc)).thenReturn(fcPersisted);
 
         //When
-        FilmsCollection fcReturned = filmsCollectionDbService.saveFilmsCollection(fc);
+        FilmsCollection fcReturned = filmsCollectionDbService.saveFilmsCollection(fc, user.getUserId());
 
         //Then
         Assert.assertNotNull(fcReturned);

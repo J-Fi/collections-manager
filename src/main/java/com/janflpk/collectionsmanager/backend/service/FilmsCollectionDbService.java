@@ -14,9 +14,13 @@ import java.util.Optional;
 public class FilmsCollectionDbService {
 
     @Autowired
+    private UserDbService userDbService;
+
+    @Autowired
     private FilmsCollectionRepository filmsCollectionRepo;
 
-    public FilmsCollection saveFilmsCollection (FilmsCollection filmsCollection) {
+    public FilmsCollection saveFilmsCollection (FilmsCollection filmsCollection, Long userId) {
+        filmsCollection.setUser(userDbService.findById(userId));
         return filmsCollectionRepo.save(filmsCollection);
     }
 

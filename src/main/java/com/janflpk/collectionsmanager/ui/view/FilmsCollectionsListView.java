@@ -1,14 +1,18 @@
 package com.janflpk.collectionsmanager.ui.view;
 
+import com.janflpk.collectionsmanager.backend.domain.books.BooksCollection;
 import com.janflpk.collectionsmanager.backend.domain.films.FilmsCollection;
 import com.janflpk.collectionsmanager.backend.service.CurrentUserRetriever;
 import com.janflpk.collectionsmanager.backend.service.FilmDbService;
 import com.janflpk.collectionsmanager.backend.service.FilmsCollectionDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
@@ -44,7 +48,9 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
         H2 filmsCollectionsGridHeader = new H2("Twoje kolekcje filmów");
 
         configureFilmsCollectionGrid();
-        //updateFilmsCollectionList();
+        addNewCollection.addClickListener(e -> {
+            createNewCollection();
+        });
         add(filmsCollectionsGridHeader, addNewCollection, filmsCollectionGrid);
         setSizeFull();
     }
@@ -58,7 +64,7 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
         filmsCollectionGrid.addColumn(e -> filmDbService.countFilmsByFilmsCollection_FilmsCollectionId(e.getFilmsCollectionId()).orElse(0L))
                 .setHeader("Liczba filmów")
                 .setSortable(true);
-        filmsCollectionGrid.addColumn(new NativeButtonRenderer<FilmsCollection>("Usuń kolekcję",
+        filmsCollectionGrid.addColumn(new NativeButtonRenderer<>("Usuń kolekcję",
                 clickedItem -> {
                     filmsCollectionDbService.deleteFilmsCollection(clickedItem.getFilmsCollectionId());
                     updateFilmsCollectionsList();
@@ -69,6 +75,29 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
             parameters.put("filmsCollectionId", e.getValue().getFilmsCollectionId().toString());
             this.getUI().ifPresent(ui -> ui.navigate("films", QueryParameters.simple(parameters)));
         });
+    }
+
+    public void createNewCollection() {
+        Dialog dialog = new Dialog();
+        TextField collectionNameInput = new TextField();
+        collectionNameInput.setPlaceholder("Podaj nazwę kolekcji...");
+
+        Button saveButton = new Button("Zapisz");
+        Button cancelButton = new Button("Anuluj");
+        HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, cancelButton);
+
+        VerticalLayout dialogLayout = new VerticalLayout(collectionNameInput, buttonLayout);
+
+        saveButton.addClickListener(e -> {
+            filmsCollectionDbService.saveFilmsCollection(new FilmsCollection(collectionNameInput.getValue()), userId);
+            dialog.close();
+            updateFilmsCollectionsList();
+        });
+
+        cancelButton.addClickListener(e -> dialog.close());
+
+        dialog.add(dialogLayout);
+        dialog.open();
     }
 
     //tutaj trzeba uzupełnić kod
