@@ -68,11 +68,8 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
                 .setHeader("Liczba filmów")
                 .setSortable(true);
         filmsCollectionGrid.addColumn(new NativeButtonRenderer<>("Usuń kolekcję",
-                clickedItem -> {
-                    filmsCollectionDbService.deleteFilmsCollection(clickedItem.getFilmsCollectionId());
-                    updateFilmsCollectionsList();
-                }));
-        filmsCollectionGrid.addColumn(new NativeButtonRenderer<FilmsCollection>("Zmień nazwę",
+                clickedItem -> confirmDeletingCollection(clickedItem.getFilmsCollectionId(), clickedItem.getCollectionName())));
+        filmsCollectionGrid.addColumn(new NativeButtonRenderer<>("Zmień nazwę",
                 this::changeCollectionName));
 
         filmsCollectionGrid.asSingleSelect().addValueChangeListener(e -> {
