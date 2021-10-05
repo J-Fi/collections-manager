@@ -10,6 +10,9 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -69,12 +72,38 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
                     filmsCollectionDbService.deleteFilmsCollection(clickedItem.getFilmsCollectionId());
                     updateFilmsCollectionsList();
                 }));
+        filmsCollectionGrid.addColumn(new NativeButtonRenderer<FilmsCollection>("Zmień nazwę",
+                this::changeCollectionName));
 
         filmsCollectionGrid.asSingleSelect().addValueChangeListener(e -> {
             Map<String, String> parameters = new HashMap<>();
             parameters.put("filmsCollectionId", e.getValue().getFilmsCollectionId().toString());
             this.getUI().ifPresent(ui -> ui.navigate("films", QueryParameters.simple(parameters)));
         });
+    }
+
+    private void confirmDeletingCollection(Long filmsCollectionId, String collectionName) {
+        Icon logo = new Icon(VaadinIcon.QUESTION_CIRCLE);
+
+        Dialog dialog = new Dialog();
+
+        Button yesButton = new Button("Tak");
+        Button cancelButton = new Button("Anuluj");
+
+        Label label = new Label("Czy na pewno chcesz skasować kolekcję " + collectionName.toUpperCase() + "?");
+
+        HorizontalLayout labelLayout = new HorizontalLayout(logo, label);
+        HorizontalLayout buttonsLayout = new HorizontalLayout(yesButton, cancelButton);
+        VerticalLayout dialogLayout = new VerticalLayout(labelLayout, buttonsLayout);
+        yesButton.addClickListener(e -> {
+            filmsCollectionDbService.deleteFilmsCollection(filmsCollectionId);
+            dialog.close();
+            updateFilmsCollectionsList();
+        });
+        cancelButton.addClickListener(e -> dialog.close());
+
+        dialog.add(dialogLayout);
+        dialog.open();
     }
 
     public void createNewCollection() {
@@ -100,7 +129,29 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
         dialog.open();
     }
 
-    //tutaj trzeba uzupełnić kod
+    private void changeCollectionName(FilmsCollection filmsCollection) {
+        Dialog dialog = new Dialog();
+        TextField collectionRenameInput = new TextField();
+        collectionRenameInput.setPlaceholder("Podaj nową nazwę kolekcji...");
+
+        Button saveButton = new Button("Zapisz");
+        Button cancelButton = new Button("Anuluj");
+        HorizontalLayout buttonLayout = new HorizontalLayout(saveButton, cancelButton);
+
+        VerticalLayout dialogLayout = new VerticalLayout(collectionRenameInput, buttonLayout);
+
+        saveButton.addClickListener(e -> {
+            filmsCollection.setCollectionName(collectionRenameInput.getValue());
+            filmsCollectionDbService.updateFilmsCollection(filmsCollection);
+            dialog.close();
+            updateFilmsCollectionsList();
+        });
+
+        cancelButton.addClickListener(e -> dialog.close());
+
+        dialog.add(dialogLayout);
+        dialog.open();
+    }
 
     private void updateFilmsCollectionsList() {
         filmsCollectionGrid.setItems(filmsCollectionDbService.findFilmsCollectionsByUserId(userId));

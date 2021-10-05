@@ -39,4 +39,8 @@ public class FilmsCollectionDbService {
     public List<FilmsCollection> findAll() {
         return filmsCollectionRepo.findAll();
     }
+
+    public void updateFilmsCollection(FilmsCollection filmsCollection) {
+        filmsCollectionRepo.save(filmsCollection);
+    }
 }
