@@ -1,7 +1,7 @@
 package com.janflpk.collectionsmanager.ui;
 
-import com.janflpk.collectionsmanager.ui.view.BooksCollectionsListView;
-import com.janflpk.collectionsmanager.ui.view.FilmsCollectionsListView;
+import com.janflpk.collectionsmanager.ui.view.book.BooksCollectionsListView;
+import com.janflpk.collectionsmanager.ui.view.film.FilmsCollectionsListView;
 import com.janflpk.collectionsmanager.ui.view.HomeView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;

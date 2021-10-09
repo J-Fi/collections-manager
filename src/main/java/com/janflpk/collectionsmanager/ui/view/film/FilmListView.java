@@ -1,4 +1,4 @@
-package com.janflpk.collectionsmanager.ui.view;
+package com.janflpk.collectionsmanager.ui.view.film;
 
 import com.janflpk.collectionsmanager.backend.domain.books.Book;
 import com.janflpk.collectionsmanager.backend.domain.films.Film;
@@ -6,10 +6,12 @@ import com.janflpk.collectionsmanager.backend.omdb.facade.OmdbFacade;
 import com.janflpk.collectionsmanager.backend.service.FilmDbService;
 import com.janflpk.collectionsmanager.backend.service.FilmsCollectionDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
+import com.janflpk.collectionsmanager.ui.view.film.form.FilmForm;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
@@ -117,8 +119,8 @@ public class FilmListView extends VerticalLayout implements HasUrlParameter<Stri
     }
 
     private void configureFilmViewPopupWindow() {
-        filmViewPopupWindow.setHeight("675px");
-        filmViewPopupWindow.setWidth("800px");
+        filmViewPopupWindow.setMaxHeight("675px");
+        filmViewPopupWindow.setMaxWidth("800px");
     }
 
     private FilmForm getFilmForm(Film film) {
@@ -133,11 +135,16 @@ public class FilmListView extends VerticalLayout implements HasUrlParameter<Stri
 
     private void getFilmViewPopupWindow(Film film) {
         configureFilmViewPopupWindow();
-        HorizontalLayout dialog = new HorizontalLayout(getFilmPosterImage(film), getFilmForm(film));
-        dialog.setSizeFull();
-        filmViewPopupWindow.add(dialog);
+        FormLayout formLayout = new FormLayout(getFilmPosterImage(film), getFilmForm(film));
+        //HorizontalLayout dialog = new HorizontalLayout(getFilmPosterImage(film), getFilmForm(film));
+        formLayout.setSizeFull();
+
+        filmViewPopupWindow.add(formLayout);
         filmViewPopupWindow.addDialogCloseActionListener(e -> closeFilmForm());
         filmViewPopupWindow.open();
+
+        formLayout.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+                new FormLayout.ResponsiveStep("490", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP));
     }
 
     private HorizontalLayout getToolBar() {
@@ -154,9 +161,9 @@ public class FilmListView extends VerticalLayout implements HasUrlParameter<Stri
             filmPosterImage.setSrc(film.getPosterLink());
             filmPosterImage.setAlt("Film's poster");
             filmPosterImage.setMaxHeight("300px");
-            filmPosterImage.setMinHeight("200px");
-            filmPosterImage.setMaxWidth("300px");
-            filmPosterImage.setMinWidth("200px");
+            //filmPosterImage.setMinHeight("200px");
+            filmPosterImage.setMaxWidth("200px");
+            //filmPosterImage.setMinWidth("200px");
             return filmPosterImage;
         }
         return new Image();

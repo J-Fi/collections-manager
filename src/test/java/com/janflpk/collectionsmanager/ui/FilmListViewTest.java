@@ -4,7 +4,7 @@ package com.janflpk.collectionsmanager.ui;
 import com.janflpk.collectionsmanager.backend.domain.films.Film;
 import com.janflpk.collectionsmanager.backend.omdb.facade.OmdbFacade;
 import com.janflpk.collectionsmanager.backend.service.FilmDbService;
-import com.janflpk.collectionsmanager.ui.view.FilmListView;
+import com.janflpk.collectionsmanager.ui.view.film.FilmListView;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

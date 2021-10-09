@@ -2,7 +2,7 @@
 package com.janflpk.collectionsmanager.ui;
 
 import com.janflpk.collectionsmanager.backend.domain.books.Book;
-import com.janflpk.collectionsmanager.ui.view.BookListView;
+import com.janflpk.collectionsmanager.ui.view.book.BookListView;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

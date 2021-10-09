@@ -1,4 +1,4 @@
-package com.janflpk.collectionsmanager.ui.view;
+package com.janflpk.collectionsmanager.ui.view.film.form;
 
 import com.janflpk.collectionsmanager.backend.domain.films.Film;
 import com.vaadin.flow.component.Component;
@@ -50,7 +50,12 @@ public class FilmForm extends FormLayout {
         filmFormDiv.setSizeFull();
         filmFormDiv.addClassName("film-form-div");
 
+        setResponsiveSteps(new ResponsiveStep("0", 1, ResponsiveStep.LabelsPosition.TOP),
+                new ResponsiveStep("490", 2, ResponsiveStep.LabelsPosition.TOP));
+
         setSizeFull();
+
+        setMaxWidth("500px");
 
         add(filmFormDiv);
     }
@@ -80,6 +85,8 @@ public class FilmForm extends FormLayout {
         HorizontalLayout buttonsLayout = new HorizontalLayout(addFilm, deleteFilm, close);
         buttonsLayout.getElement().getStyle().set("padding", "0px 16px 0px 16px");
         buttonsLayout.setClassName("film-buttons-layout");
+
+
 
         return buttonsLayout;
     }

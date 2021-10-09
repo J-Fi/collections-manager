@@ -1,10 +1,9 @@
-package com.janflpk.collectionsmanager.ui.view;
+package com.janflpk.collectionsmanager.ui.view.book;
 
 import com.janflpk.collectionsmanager.backend.domain.books.BooksCollection;
-import com.janflpk.collectionsmanager.backend.domain.films.FilmsCollection;
+import com.janflpk.collectionsmanager.backend.service.BookDbService;
+import com.janflpk.collectionsmanager.backend.service.BooksCollectionDbService;
 import com.janflpk.collectionsmanager.backend.service.CurrentUserRetriever;
-import com.janflpk.collectionsmanager.backend.service.FilmDbService;
-import com.janflpk.collectionsmanager.backend.service.FilmsCollectionDbService;
 import com.janflpk.collectionsmanager.ui.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -26,60 +25,60 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashMap;
 import java.util.Map;
 
-@Route(value = "films-collections", layout = MainLayout.class)
-public class FilmsCollectionsListView extends VerticalLayout implements AfterNavigationObserver {
+@Route(value = "books-collections", layout = MainLayout.class)
+public class BooksCollectionsListView extends VerticalLayout implements AfterNavigationObserver {
 
     private Button addNewCollection = new Button("Dodaj nową kolekcję");
     private Button updateCollection = new Button("Edytuj");
     private Button deleteCollection = new Button("Usuń");
 
     @Autowired
+    private BooksCollectionDbService booksCollectionDbService;
+
+    @Autowired
+    private BookDbService bookDbService;
+
+    @Autowired
     private CurrentUserRetriever currentUserRetriever;
-
-    @Autowired
-    private FilmsCollectionDbService filmsCollectionDbService;
-
-    @Autowired
-    private FilmDbService filmDbService;
 
     private Long userId;
 
-    private Grid<FilmsCollection> filmsCollectionGrid;
+    Grid<BooksCollection> booksCollectionGrid;
 
-    public FilmsCollectionsListView() {
+    public BooksCollectionsListView() {
 
-        H2 filmsCollectionsGridHeader = new H2("Twoje kolekcje filmów");
+        H2 collectionsGridHeader = new H2("Twoje kolekcje książek");
 
-        configureFilmsCollectionGrid();
+        configureBooksCollectionGrid();
         addNewCollection.addClickListener(e -> {
             createNewCollection();
         });
-        add(filmsCollectionsGridHeader, addNewCollection, filmsCollectionGrid);
+        add(collectionsGridHeader, addNewCollection, booksCollectionGrid);
         setSizeFull();
     }
 
-    private void configureFilmsCollectionGrid() {
-        filmsCollectionGrid = new Grid<>(FilmsCollection.class, false);
-        filmsCollectionGrid.setSizeFull();
-        filmsCollectionGrid.addColumn(FilmsCollection::getCollectionName)
+    private void configureBooksCollectionGrid() {
+        booksCollectionGrid = new Grid<>(BooksCollection.class, false);
+        booksCollectionGrid.setSizeFull();
+        booksCollectionGrid.addColumn(BooksCollection::getCollectionName)
                 .setHeader("Nazwa kolekcji")
                 .setSortable(true);
-        filmsCollectionGrid.addColumn(e -> filmDbService.countFilmsByFilmsCollection_FilmsCollectionId(e.getFilmsCollectionId()).orElse(0L))
-                .setHeader("Liczba filmów")
+        booksCollectionGrid.addColumn(e -> bookDbService.countBooksByBooksCollection_BooksCollectionId(e.getBooksCollectionId()).orElse(0L))
+                .setHeader("Liczba woluminów")
                 .setSortable(true);
-        filmsCollectionGrid.addColumn(new NativeButtonRenderer<>("Usuń kolekcję",
-                clickedItem -> confirmDeletingCollection(clickedItem.getFilmsCollectionId(), clickedItem.getCollectionName())));
-        filmsCollectionGrid.addColumn(new NativeButtonRenderer<>("Zmień nazwę",
+        booksCollectionGrid.addColumn(new NativeButtonRenderer<>("Usuń kolekcję",
+                clickedItem -> confirmDeletingCollection(clickedItem.getBooksCollectionId(), clickedItem.getCollectionName())));
+        booksCollectionGrid.addColumn(new NativeButtonRenderer<>("Zmień nazwę",
                 this::changeCollectionName));
 
-        filmsCollectionGrid.asSingleSelect().addValueChangeListener(e -> {
+        booksCollectionGrid.asSingleSelect().addValueChangeListener(e -> {
             Map<String, String> parameters = new HashMap<>();
-            parameters.put("filmsCollectionId", e.getValue().getFilmsCollectionId().toString());
-            this.getUI().ifPresent(ui -> ui.navigate("films", QueryParameters.simple(parameters)));
+            parameters.put("booksCollectionId", e.getValue().getBooksCollectionId().toString());
+            this.getUI().ifPresent(ui -> ui.navigate("books", QueryParameters.simple(parameters)));
         });
     }
 
-    private void confirmDeletingCollection(Long filmsCollectionId, String collectionName) {
+    private void confirmDeletingCollection(Long booksCollectionId, String collectionName) {
         Icon logo = new Icon(VaadinIcon.QUESTION_CIRCLE);
 
         Dialog dialog = new Dialog();
@@ -93,9 +92,9 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
         HorizontalLayout buttonsLayout = new HorizontalLayout(yesButton, cancelButton);
         VerticalLayout dialogLayout = new VerticalLayout(labelLayout, buttonsLayout);
         yesButton.addClickListener(e -> {
-            filmsCollectionDbService.deleteFilmsCollection(filmsCollectionId);
+            booksCollectionDbService.deleteBooksCollection(booksCollectionId);
             dialog.close();
-            updateFilmsCollectionsList();
+            updateBooksCollectionsList();
         });
         cancelButton.addClickListener(e -> dialog.close());
 
@@ -115,9 +114,9 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
         VerticalLayout dialogLayout = new VerticalLayout(collectionNameInput, buttonLayout);
 
         saveButton.addClickListener(e -> {
-            filmsCollectionDbService.saveFilmsCollection(new FilmsCollection(collectionNameInput.getValue()), userId);
+            booksCollectionDbService.saveBooksCollection(new BooksCollection(collectionNameInput.getValue()), userId);
             dialog.close();
-            updateFilmsCollectionsList();
+            updateBooksCollectionsList();
         });
 
         cancelButton.addClickListener(e -> dialog.close());
@@ -126,7 +125,7 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
         dialog.open();
     }
 
-    private void changeCollectionName(FilmsCollection filmsCollection) {
+    private void changeCollectionName(BooksCollection booksCollection) {
         Dialog dialog = new Dialog();
         TextField collectionRenameInput = new TextField();
         collectionRenameInput.setPlaceholder("Podaj nową nazwę kolekcji...");
@@ -138,10 +137,10 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
         VerticalLayout dialogLayout = new VerticalLayout(collectionRenameInput, buttonLayout);
 
         saveButton.addClickListener(e -> {
-            filmsCollection.setCollectionName(collectionRenameInput.getValue());
-            filmsCollectionDbService.updateFilmsCollection(filmsCollection);
+            booksCollection.setCollectionName(collectionRenameInput.getValue());
+            booksCollectionDbService.updateBooksCollection(booksCollection);
             dialog.close();
-            updateFilmsCollectionsList();
+            updateBooksCollectionsList();
         });
 
         cancelButton.addClickListener(e -> dialog.close());
@@ -150,13 +149,13 @@ public class FilmsCollectionsListView extends VerticalLayout implements AfterNav
         dialog.open();
     }
 
-    private void updateFilmsCollectionsList() {
-        filmsCollectionGrid.setItems(filmsCollectionDbService.findFilmsCollectionsByUserId(userId));
+    private void updateBooksCollectionsList() {
+        booksCollectionGrid.setItems(booksCollectionDbService.findBooksCollectionsByUserId(userId));
     }
 
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
         userId = currentUserRetriever.retrieveUserId();
-        updateFilmsCollectionsList();
+        updateBooksCollectionsList();
     }
 }

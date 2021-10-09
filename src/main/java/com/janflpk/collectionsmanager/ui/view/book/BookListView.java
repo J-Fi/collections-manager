@@ -1,4 +1,4 @@
-package com.janflpk.collectionsmanager.ui.view;
+package com.janflpk.collectionsmanager.ui.view.book;
 
 import com.janflpk.collectionsmanager.backend.domain.books.Book;
 import com.janflpk.collectionsmanager.backend.isbndb.facade.IsbndbFacade;

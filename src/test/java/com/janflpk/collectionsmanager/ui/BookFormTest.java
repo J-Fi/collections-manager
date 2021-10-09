@@ -1,6 +1,6 @@
 package com.janflpk.collectionsmanager.ui;
 
-import com.janflpk.collectionsmanager.ui.view.BookForm;
+import com.janflpk.collectionsmanager.ui.view.book.BookForm;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
