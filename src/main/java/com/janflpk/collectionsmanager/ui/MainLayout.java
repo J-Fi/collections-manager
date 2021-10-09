@@ -11,12 +11,16 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.InitialPageSettings;
+import com.vaadin.flow.server.PageConfigurator;
 
 @CssImport("./styles/shared-styles.css")
-public class MainLayout extends AppLayout implements RouterLayout {
+@Viewport("width=device-width")
+public class MainLayout extends AppLayout implements RouterLayout, PageConfigurator {
 
     public MainLayout() {
         createHeader();
@@ -24,6 +28,7 @@ public class MainLayout extends AppLayout implements RouterLayout {
     }
 
     private void createHeader() {
+        System.out.println("Does it work??");
         H1 logo = new H1("Personal Collection Manager");
         logo.addClassName("logo");
 
@@ -53,5 +58,12 @@ public class MainLayout extends AppLayout implements RouterLayout {
         filmListsLink.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(homeViewLink, bookListsLink, filmListsLink));
+    }
+
+    @Override
+    public void configurePage(InitialPageSettings settings) {
+        System.out.println("configurePage() was called" + settings.toString());
+        settings.addLink("shortcut icon", "icons/favicon.ico");
+        //settings.addLink("shortcut icon", "icons/favicon.ico");
     }
 }
